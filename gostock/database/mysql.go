@@ -2,6 +2,7 @@ package database
 
 import (
 	"fmt"
+	"github.com/jordanoskidavid/go-stock-react/models"
 	"log"
 	"os"
 	"time"
@@ -21,6 +22,7 @@ func ConnectDB() {
 	dsn := fmt.Sprintf("%s:%s@tcp(%s:3306)/%s?parseTime=true&charset=utf8mb4&collation=utf8mb4_unicode_ci",
 		user, password, host, dbname,
 	)
+
 	var db *gorm.DB
 	var err error
 
@@ -28,21 +30,31 @@ func ConnectDB() {
 
 	for i := 0; i < maxRetries; i++ {
 		db, err = gorm.Open(mysql.Open(dsn), &gorm.Config{})
-		if err == nil {
+		if err == nil && db != nil {
 			break
 		}
+		log.Printf("⏳ DB not ready (attempt %d/%d): %v", i+1, maxRetries, err)
 		time.Sleep(2 * time.Second)
 	}
 
-	if err != nil {
+	if err != nil || db == nil {
 		log.Fatalf("Failed to connect to database after %d attempts: %v", maxRetries, err)
 	}
 
-	sqlDB, _ := db.DB()
+	sqlDB, err := db.DB()
+	if err != nil {
+		log.Fatalf("Failed to get sql.DB from GORM: %v", err)
+	}
+
 	sqlDB.SetConnMaxLifetime(time.Minute * 5)
 	sqlDB.SetMaxOpenConns(10)
 	sqlDB.SetMaxIdleConns(5)
 
 	log.Println("Connected to MySQL!")
 	DB = db
+
+	err = db.AutoMigrate(&models.User{})
+	if err != nil {
+		log.Fatalf("AutoMigrate failed: %v", err)
+	}
 }
