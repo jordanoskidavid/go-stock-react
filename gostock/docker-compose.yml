@@ -12,14 +12,14 @@ services:
       - DB_HOST=db
       - DB_USER=root
       - DB_PASSWORD=root
-      - DB_NAME=go-stock
+      - DB_NAME=goStock
 
   db:
     image: mysql:latest
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: go-stock
+      MYSQL_DATABASE: goStock
     ports:
       - "3306:3306"
     volumes:
