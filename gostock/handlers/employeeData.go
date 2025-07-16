@@ -5,8 +5,8 @@ import (
 	"net/http"
 )
 
-func AdminDashboard(w http.ResponseWriter, r *http.Request) {
-	_, err := fmt.Fprintln(w, "Welcome to Admin Dashboard!")
+func EmployeeData(w http.ResponseWriter, r *http.Request) {
+	_, err := fmt.Fprintln(w, "Employee-level data access granted.")
 	if err != nil {
 		return
 	}

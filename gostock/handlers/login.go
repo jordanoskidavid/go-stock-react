@@ -14,7 +14,10 @@ var jwtKey = []byte("your-secret-key")
 
 func Login(w http.ResponseWriter, r *http.Request) {
 	var creds models.User
-	json.NewDecoder(r.Body).Decode(&creds)
+	err := json.NewDecoder(r.Body).Decode(&creds)
+	if err != nil {
+		return
+	}
 
 	var user models.User
 	result := database.DB.Where("email = ?", creds.Email).First(&user)
