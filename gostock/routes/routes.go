@@ -22,5 +22,11 @@ func SetupRoutes() {
 	http.HandleFunc("/api/admin/dashboard", middleware.AuthMiddleware(
 		middleware.RoleMiddleware(handlers.AdminDashboard, "admin"),
 	))
+	http.HandleFunc("/api/users", middleware.AuthMiddleware(
+		middleware.RoleMiddleware(handlers.UsersHandler, "admin"),
+	))
+	http.HandleFunc("/api/users/", middleware.AuthMiddleware(
+		middleware.RoleMiddleware(handlers.UserByIDHandler, "admin"),
+	))
 
 }
