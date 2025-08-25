@@ -28,6 +28,9 @@ func SetupRoutes() {
 	http.HandleFunc("/api/category/get-all-categories", middleware.AuthMiddleware(
 		middleware.RoleMiddleware(handlers.GetAllCategories, "admin", "manager", "employee"),
 	))
+	http.HandleFunc("/api/category/get-category/", middleware.AuthMiddleware(
+		middleware.RoleMiddleware(handlers.GetCategoryByID, "admin", "manager", "employee"),
+	))
 
 	//routes for manager and admin
 	//create product
