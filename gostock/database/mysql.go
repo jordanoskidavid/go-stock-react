@@ -57,4 +57,8 @@ func ConnectDB() {
 	if err != nil {
 		log.Fatalf("AutoMigrate failed: %v", err)
 	}
+	err = db.AutoMigrate(&models.Category{}, &models.Product{})
+	if err != nil {
+		return
+	}
 }
