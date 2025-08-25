@@ -23,6 +23,7 @@ type ProductResponse struct {
 	Price       float64   `json:"price"`
 	Stock       int       `json:"stock"`
 	CategoryID  *uint     `json:"category_id,omitempty"`
+	Category    string    `json:"category"`
 	CreatedAt   time.Time `json:"created_at"`
 	UpdatedAt   time.Time `json:"updated_at"`
 }

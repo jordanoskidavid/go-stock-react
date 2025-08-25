@@ -22,12 +22,36 @@ func GetAllProducts(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	w.Header().Set("Content-Type", "application/json")
-	err := json.NewEncoder(w).Encode(products)
-	if err != nil {
+	if len(products) == 0 {
+		w.Header().Set("Content-Type", "application/json")
+		err := json.NewEncoder(w).Encode(map[string]string{"message": "Your products list is empty"})
+		if err != nil {
+			return
+		}
 		return
 	}
+
+	var response []models.ProductResponse
+	for _, p := range products {
+		response = append(response, models.ProductResponse{
+			ID:          p.ID,
+			Name:        p.Name,
+			Description: p.Description,
+			Price:       p.Price,
+			Stock:       p.Stock,
+			CategoryID:  p.CategoryID,
+			Category:    p.Category.Name,
+			CreatedAt:   p.CreatedAt,
+			UpdatedAt:   p.UpdatedAt,
+		})
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	if err := json.NewEncoder(w).Encode(response); err != nil {
+		http.Error(w, "Failed to encode response", http.StatusInternalServerError)
+	}
 }
+
 func GetProductByID(w http.ResponseWriter, r *http.Request) {
 	idStr := strings.TrimPrefix(r.URL.Path, "/api/products/getByID/")
 	id, _ := strconv.Atoi(idStr)
@@ -45,6 +69,7 @@ func GetProductByID(w http.ResponseWriter, r *http.Request) {
 		Price:       product.Price,
 		Stock:       product.Stock,
 		CategoryID:  product.CategoryID,
+		Category:    product.Category.Name,
 		CreatedAt:   product.CreatedAt,
 		UpdatedAt:   product.UpdatedAt,
 	}
@@ -85,8 +110,12 @@ func CreateProduct(w http.ResponseWriter, r *http.Request) {
 	}
 }
 func UpdateProductByID(w http.ResponseWriter, r *http.Request) {
-	idStr := strings.TrimPrefix(r.URL.Path, "/api/products/")
-	id, _ := strconv.Atoi(idStr)
+	idStr := strings.TrimPrefix(r.URL.Path, "/api/products/update-product/")
+	id, err := strconv.Atoi(idStr)
+	if err != nil || id == 0 {
+		http.Error(w, "Invalid product ID", http.StatusBadRequest)
+		return
+	}
 
 	var product models.Product
 	if err := database.DB.First(&product, id).Error; err != nil {
@@ -94,12 +123,14 @@ func UpdateProductByID(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	// Decode input
 	var input models.Product
 	if err := json.NewDecoder(r.Body).Decode(&input); err != nil {
 		http.Error(w, "Invalid input", http.StatusBadRequest)
 		return
 	}
 
+	// Update fields
 	product.Name = input.Name
 	product.Description = input.Description
 	product.Price = input.Price
@@ -111,6 +142,11 @@ func UpdateProductByID(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	if err := database.DB.Preload("Category").First(&product, product.ID).Error; err != nil {
+		http.Error(w, "Failed to fetch updated product", http.StatusInternalServerError)
+		return
+	}
+
 	response := models.ProductResponse{
 		ID:          product.ID,
 		Name:        product.Name,
@@ -118,18 +154,19 @@ func UpdateProductByID(w http.ResponseWriter, r *http.Request) {
 		Price:       product.Price,
 		Stock:       product.Stock,
 		CategoryID:  product.CategoryID,
+		Category:    product.Category.Name,
 		CreatedAt:   product.CreatedAt,
 		UpdatedAt:   product.UpdatedAt,
 	}
 
 	w.Header().Set("Content-Type", "application/json")
-	err := json.NewEncoder(w).Encode(response)
-	if err != nil {
-		return
+	if err := json.NewEncoder(w).Encode(response); err != nil {
+		http.Error(w, "Failed to encode response", http.StatusInternalServerError)
 	}
 }
+
 func DeleteProductByID(w http.ResponseWriter, r *http.Request) {
-	idStr := strings.TrimPrefix(r.URL.Path, "/api/products/")
+	idStr := strings.TrimPrefix(r.URL.Path, "/api/products/delete-product/")
 	id, _ := strconv.Atoi(idStr)
 
 	if err := database.DB.Delete(&models.Product{}, id).Error; err != nil {
