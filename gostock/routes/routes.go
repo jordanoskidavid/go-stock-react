@@ -82,5 +82,4 @@ func SetupRoutes() {
 	http.HandleFunc("/api/delete-user-by-id/", middleware.AuthMiddleware(
 		middleware.RoleMiddleware(handlers.DeleteUserByID, "admin"),
 	))
-
 }
