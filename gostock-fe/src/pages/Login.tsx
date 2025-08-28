@@ -1,4 +1,9 @@
+
 const Login = () =>{
-    return <p>LOGIN PAGE</p>
+    return (
+        <>
+        <p>Username</p>
+        </>
+    );
 }
 export default Login;
