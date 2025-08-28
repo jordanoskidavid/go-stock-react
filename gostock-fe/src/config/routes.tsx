@@ -1,6 +1,9 @@
 import * as React from "react";
-import {Home} from "../pages/Home.tsx";
-import { About } from "../pages/About";
+import Home from "../pages/Home.tsx";
+import About from "../pages/About.tsx";
+import Login from "../pages/Login.tsx";
+import Register from "../pages/Register.tsx";
+import Users from "../pages/Users.tsx";
 
 export interface RouteType {
     path: string;
@@ -8,8 +11,10 @@ export interface RouteType {
 }
 
 export const routes: RouteType[] = [
-    { path: "/", element: Home },
+    { path: "/", element: Home },//dashboard
     { path: "/about", element: About },
-    // Add more routes here
+    { path: "/login", element: Login},
+    { path: "/register", element: Register},
+    { path: "/users", element: Users},
 ];
 
