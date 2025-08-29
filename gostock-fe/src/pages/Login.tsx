@@ -28,7 +28,7 @@ const Login = () => {
                 elevation={3}
                 sx={{
                     display: "flex",
-                    flexDirection: "row",
+                    flexDirection: { xs: "column", md: "row" },
                     borderRadius: 3,
                     overflow: "hidden",
                     width: "80%",
@@ -72,7 +72,7 @@ const Login = () => {
                 </Box>
 
                 {/* Right side = form */}
-                <Box sx={{ flex: 1, p: 4, width: { xs: "100%", sm: "auto" }}}>
+                <Box sx={{ flex: 1, p: 4, mt: { xs: -3, md: 0 },}}>
                     <Typography variant="h4" align="center" gutterBottom>
                         Log In
                     </Typography>
