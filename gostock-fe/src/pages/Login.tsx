@@ -1,13 +1,78 @@
-import {useLogin} from "../hooks/useLogin.ts"
-import {Container,Paper, Typography, Alert, Box, TextField,Button} from "@mui/material";
-const Login = () =>{
+import { useLogin } from "../hooks/useLogin.ts";
+import {
+    Container,
+    Paper,
+    Typography,
+    Alert,
+    Box,
+    TextField,
+    Button,
+} from "@mui/material";
 
-    const {email, password,setEmail,setPassword,error,handleSubmit} = useLogin();
+const Login = () => {
+    const { email, password, setEmail, setPassword, error, handleSubmit } =
+        useLogin();
 
     return (
-        <>
-            <Container maxWidth="sm">
-                <Paper elevation={3} sx={{ padding: 4, mt: 20, borderRadius: 3 }}>
+        <Container
+            maxWidth={false}
+            sx={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                minHeight: "100dvh"
+            }}
+        >
+            {/* Wrapper for left + right */}
+            <Paper
+                elevation={3}
+                sx={{
+                    display: "flex",
+                    flexDirection: "row",
+                    borderRadius: 3,
+                    overflow: "hidden",
+                    width: "80%",
+                    maxWidth: "900px",
+                }}
+            >
+                {/* Left side = logo */}
+                <Box
+                    sx={{
+                        flex: 1,
+                        backgroundColor: "transparent",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        flexDirection: "column",
+                        p: 4,
+                    }}
+                >
+                    <Box
+                        component="img"
+                        src="/logo.png"
+                        alt="Logo"
+                        sx={{
+                            width: "100%",       // scale to parent width
+                            maxWidth: "300px",   // never bigger than 300px
+                            height: "auto",      // maintain aspect ratio
+                            marginBottom: {xs: "-10px",sm:"-40px", md:"-40px"}
+                        }}
+                    />
+
+                    <Typography
+                        variant="h5"
+                        align="center"
+                        sx={{
+                            fontWeight: "bold",
+                            fontSize: { xs: "1.8rem", sm: "1.25rem", md: "1.5rem" },
+                          }}
+                    >
+                        Simplify. Organize. Succeed
+                    </Typography>
+                </Box>
+
+                {/* Right side = form */}
+                <Box sx={{ flex: 1, p: 4, width: { xs: "100%", sm: "auto" }}}>
                     <Typography variant="h4" align="center" gutterBottom>
                         Log In
                     </Typography>
@@ -26,16 +91,6 @@ const Login = () =>{
                             type="email"
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
-                            sx={{ '& .MuiOutlinedInput-notchedOutline': {
-                                    borderColor: '#008DDA', // Default outline color
-                                },
-                                '&:hover .MuiOutlinedInput-notchedOutline': {
-                                    borderColor: '#008DDA', color: '#008DDA'  // Outline color on hover
-                                },
-                                '& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline': {
-                                    borderColor: '#008DDA', // Outline color when focused
-                                },}}
-                            required
                         />
 
                         <TextField
@@ -45,30 +100,27 @@ const Login = () =>{
                             type="password"
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
-                            sx={{ '& .MuiOutlinedInput-notchedOutline': {
-                                    borderColor: '#008DDA', // Default outline color
-                                },
-                                '&:hover .MuiOutlinedInput-notchedOutline': {
-                                    borderColor: '#008DDA', color: '#008DDA' // Outline color on hover
-                                },
-                                '& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline': {
-                                    borderColor: '#008DDA', // Outline color when focused
-                                },}}
-                            required
                         />
 
                         <Button
                             fullWidth
                             variant="contained"
                             type="submit"
-                            sx={{ mt: 3, fontSize: 20, backgroundColor: '#008DDA', color:'#F7EEDD'}}
+                            sx={{
+                                mt: 3,
+                                fontSize: 20,
+                                backgroundColor: "#008DDA",
+                                color: "#F7EEDD",
+                                fontWeight: "bold",
+                            }}
                         >
                             Login
                         </Button>
                     </Box>
-                </Paper>
-            </Container>
-        </>
+                </Box>
+            </Paper>
+        </Container>
     );
-}
+};
+
 export default Login;
