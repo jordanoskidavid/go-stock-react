@@ -9,14 +9,14 @@ const Home = () => {
             sx={{
                 display: "flex",
                 flexDirection: "column",
-                minHeight: "100vh", // full viewport height
+                minHeight: "100vh",
             }}
         >
             <HeaderHome />
 
             <Box
                 sx={{
-                    flexGrow: 1, // takes remaining space
+                    flexGrow: 1,
                     px: 2,
                     py: 4,
                     textAlign: "center",
