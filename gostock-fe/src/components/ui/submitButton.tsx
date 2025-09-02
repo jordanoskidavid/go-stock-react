@@ -1,13 +1,17 @@
-import {Button} from "@mui/material";
+import { Button } from "@mui/material";
+
 type ButtonProps = {
     text: string;
+    onClick?: () => void;
 };
-const SubmitButton = ({text} : ButtonProps) =>{
-    return(
+
+const SubmitButton = ({ text, onClick }: ButtonProps) => {
+    return (
         <Button
             fullWidth
             variant="contained"
             type="submit"
+            onClick={onClick} // 🔹 attach handler
             sx={{
                 mt: 3,
                 fontSize: 20,
@@ -17,6 +21,8 @@ const SubmitButton = ({text} : ButtonProps) =>{
             }}
         >
             {text}
-        </Button>);
-}
+        </Button>
+    );
+};
+
 export default SubmitButton;
