@@ -24,7 +24,6 @@ const Login = () => {
                 minHeight: "100dvh"
             }}
         >
-            {/* Wrapper for left + right */}
             <Paper
                 elevation={3}
                 sx={{
@@ -37,7 +36,7 @@ const Login = () => {
                     maxWidth: "900px",
                 }}
             >
-                {/* Left side = logo */}
+
                 <Box
                     sx={{
                         flex: 1,
@@ -95,25 +94,25 @@ const Login = () => {
                             sx={{
                                 "& .MuiOutlinedInput-root": {
                                     "& fieldset": {
-                                        borderColor: "#e3f2fd",   // default border
+                                        borderColor: "#e3f2fd",
                                     },
                                     "&:hover fieldset": {
-                                        borderColor: "#008DDA",   // on hover
+                                        borderColor: "#008DDA",
                                     },
                                     "&.Mui-focused fieldset": {
-                                        borderColor: "#008DDA",   // when focused
+                                        borderColor: "#008DDA",
                                     },
                                 },
-                                // 🔹 Change input text color
+
                                 "& .MuiInputBase-input": {
-                                    color: "#e3f2fd", // text inside the field
+                                    color: "#e3f2fd",
                                 },
-                                // 🔹 Change label color
+
                                 "& .MuiInputLabel-root": {
-                                    color: "#e3f2fd", // default label color
+                                    color: "#e3f2fd",
                                 },
                                 "& .MuiInputLabel-root.Mui-focused": {
-                                    color: "#e3f2fd", // label color when focused
+                                    color: "#e3f2fd",
                                 },
                             }}
                             value={email}
@@ -128,25 +127,25 @@ const Login = () => {
                             sx={{
                                 "& .MuiOutlinedInput-root": {
                                     "& fieldset": {
-                                        borderColor: "#e3f2fd",   // default border
+                                        borderColor: "#e3f2fd",
                                     },
                                     "&:hover fieldset": {
-                                        borderColor: "#008DDA",   // on hover
+                                        borderColor: "#008DDA",
                                     },
                                     "&.Mui-focused fieldset": {
-                                        borderColor: "#008DDA",   // when focused
+                                        borderColor: "#008DDA",
                                     },
                                 },
                                 // 🔹 Change input text color
                                 "& .MuiInputBase-input": {
-                                    color: "#e3f2fd", // text inside the field
+                                    color: "#e3f2fd",
                                 },
                                 // 🔹 Change label color
                                 "& .MuiInputLabel-root": {
-                                    color: "#e3f2fd", // default label color
+                                    color: "#e3f2fd",
                                 },
                                 "& .MuiInputLabel-root.Mui-focused": {
-                                    color: "#e3f2fd", // label color when focused
+                                    color: "#e3f2fd",
                                 }, }}
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
