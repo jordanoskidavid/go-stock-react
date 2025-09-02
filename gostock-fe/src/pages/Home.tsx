@@ -1,14 +1,52 @@
-import {Container} from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import HeaderHome from "../components/pages/home/HeaderHome.tsx";
+import FooterHome from "../components/pages/home/FooterHome";
+import Card from "../components/ui/card.tsx";
 
 const Home = () => {
     return (
-        <>
-            <HeaderHome/>
-            <Container>
-            <p>HOME PAGE</p>
-            </Container>
-        </>
+        <Box
+            sx={{
+                display: "flex",
+                flexDirection: "column",
+                minHeight: "100vh", // full viewport height
+            }}
+        >
+            <HeaderHome />
+
+            <Box
+                sx={{
+                    flexGrow: 1, // takes remaining space
+                    px: 2,
+                    py: 4,
+                    textAlign: "center",
+                }}
+            >
+                <Typography
+                    variant="subtitle1"
+                    color="text.secondary"
+                    sx={{ fontSize: "25px", mt: 5, mb: 10 }}
+                >
+                    Here’s an overview of your dashboard. Click a card to manage each section.
+                </Typography>
+
+                <Box
+                    sx={{
+                        display: "flex",
+                        justifyContent: "center", // center cards horizontally
+                        flexWrap: "wrap",
+                        gap: 4,
+                    }}
+                >
+                    <Card title="CATEGORIES" />
+                    <Card title="USERS" />
+                    <Card title="PRODUCTS" />
+                </Box>
+            </Box>
+
+            <FooterHome />
+        </Box>
     );
 };
+
 export default Home;
