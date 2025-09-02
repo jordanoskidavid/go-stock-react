@@ -1,13 +1,13 @@
 import { useLogin } from "../hooks/useLogin.ts";
+import SubmitButton from "../components/ui/submitButton";
 import {
     Container,
     Paper,
     Typography,
     Alert,
     Box,
-    TextField,
-    Button,
 } from "@mui/material";
+import CustomTextField from "../components/ui/customTextField.tsx";
 
 const Login = () => {
     const { email, password, setEmail, setPassword, error, handleSubmit } =
@@ -86,85 +86,11 @@ const Login = () => {
                     )}
 
                     <Box component="form" onSubmit={handleSubmit} noValidate>
-                        <TextField
-                            fullWidth
-                            margin="normal"
-                            label="Email"
-                            type="email"
-                            sx={{
-                                "& .MuiOutlinedInput-root": {
-                                    "& fieldset": {
-                                        borderColor: "#e3f2fd",
-                                    },
-                                    "&:hover fieldset": {
-                                        borderColor: "#008DDA",
-                                    },
-                                    "&.Mui-focused fieldset": {
-                                        borderColor: "#008DDA",
-                                    },
-                                },
+                        <CustomTextField label={"Email"} type={"email"} value={email} onChange={(e) => setEmail(e.target.value)} />
 
-                                "& .MuiInputBase-input": {
-                                    color: "#e3f2fd",
-                                },
+                        <CustomTextField label={"Password"} type={"password"} value={password} onChange={(e) => setPassword(e.target.value)} />
 
-                                "& .MuiInputLabel-root": {
-                                    color: "#e3f2fd",
-                                },
-                                "& .MuiInputLabel-root.Mui-focused": {
-                                    color: "#e3f2fd",
-                                },
-                            }}
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
-                        />
-
-                        <TextField
-                            fullWidth
-                            margin="normal"
-                            label="Password"
-                            type="password"
-                            sx={{
-                                "& .MuiOutlinedInput-root": {
-                                    "& fieldset": {
-                                        borderColor: "#e3f2fd",
-                                    },
-                                    "&:hover fieldset": {
-                                        borderColor: "#008DDA",
-                                    },
-                                    "&.Mui-focused fieldset": {
-                                        borderColor: "#008DDA",
-                                    },
-                                },
-
-                                "& .MuiInputBase-input": {
-                                    color: "#e3f2fd",
-                                },
-
-                                "& .MuiInputLabel-root": {
-                                    color: "#e3f2fd",
-                                },
-                                "& .MuiInputLabel-root.Mui-focused": {
-                                    color: "#e3f2fd",
-                                }, }}
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
-                        />
-
-                        <Button
-                            fullWidth
-                            variant="contained"
-                            type="submit"
-                            sx={{
-                                mt: 3,
-                                fontSize: 20,
-                                backgroundColor: "#008DDA",
-                                color: "#e3f2fd",
-                                fontWeight: "bold",
-                            }}
-                        >
-                            Login
-                        </Button>
+                        <SubmitButton text={"Login"}/>
                     </Box>
                 </Box>
             </Paper>

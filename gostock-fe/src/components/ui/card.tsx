@@ -9,7 +9,7 @@ const Card = ({ title }: CardProps) => {
         <Paper
             elevation={10}
             sx={{
-                borderRadius: 4,
+                borderRadius: 7,
                 p: 10,
                 textAlign: "center",
                 width: 250,
