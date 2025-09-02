@@ -8,6 +8,7 @@ const HeaderHome = () => {
                 display: "flex",
                 alignItems: "center",
                 px: 3,
+                backgroundColor: "#002A41",
                 py: 2,
             }}
         >

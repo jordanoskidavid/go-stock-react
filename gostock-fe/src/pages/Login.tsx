@@ -20,6 +20,7 @@ const Login = () => {
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
+
                 minHeight: "100dvh"
             }}
         >
@@ -32,6 +33,7 @@ const Login = () => {
                     borderRadius: 3,
                     overflow: "hidden",
                     width: "80%",
+                    backgroundColor: "#002A41",
                     maxWidth: "900px",
                 }}
             >
@@ -52,9 +54,9 @@ const Login = () => {
                         src="/logo.png"
                         alt="Logo"
                         sx={{
-                            width: "100%",       // scale to parent width
-                            maxWidth: "300px",   // never bigger than 300px
-                            height: "auto",      // maintain aspect ratio
+                            width: "100%",
+                            maxWidth: "300px",
+                            height: "auto",
                             marginBottom: {xs: "-10px",sm:"-40px", md:"-40px"}
                         }}
                     />
@@ -64,6 +66,7 @@ const Login = () => {
                         align="center"
                         sx={{
                             fontWeight: "bold",
+                            color: "#e3f2fd",
                             fontSize: { xs: "1.8rem", sm: "1.25rem", md: "1.5rem" },
                           }}
                     >
@@ -72,13 +75,13 @@ const Login = () => {
                 </Box>
 
                 {/* Right side = form */}
-                <Box sx={{ flex: 1, p: 4, mt: { xs: -3, md: 0 },}}>
+                <Box sx={{ flex: 1, p: 4, mt: { xs: -3, md: 0 }, color:"#e3f2fd"}}>
                     <Typography variant="h4" align="center" gutterBottom>
                         Log In
                     </Typography>
 
                     {error && (
-                        <Alert severity="error" sx={{ mb: 2 }}>
+                        <Alert severity="error" sx={{ mb: 2, backgroundColor:"#e3f2fd", color:"#002A41" }}>
                             {error}
                         </Alert>
                     )}
@@ -89,6 +92,30 @@ const Login = () => {
                             margin="normal"
                             label="Email"
                             type="email"
+                            sx={{
+                                "& .MuiOutlinedInput-root": {
+                                    "& fieldset": {
+                                        borderColor: "#e3f2fd",   // default border
+                                    },
+                                    "&:hover fieldset": {
+                                        borderColor: "#008DDA",   // on hover
+                                    },
+                                    "&.Mui-focused fieldset": {
+                                        borderColor: "#008DDA",   // when focused
+                                    },
+                                },
+                                // 🔹 Change input text color
+                                "& .MuiInputBase-input": {
+                                    color: "#e3f2fd", // text inside the field
+                                },
+                                // 🔹 Change label color
+                                "& .MuiInputLabel-root": {
+                                    color: "#e3f2fd", // default label color
+                                },
+                                "& .MuiInputLabel-root.Mui-focused": {
+                                    color: "#e3f2fd", // label color when focused
+                                },
+                            }}
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
                         />
@@ -98,6 +125,29 @@ const Login = () => {
                             margin="normal"
                             label="Password"
                             type="password"
+                            sx={{
+                                "& .MuiOutlinedInput-root": {
+                                    "& fieldset": {
+                                        borderColor: "#e3f2fd",   // default border
+                                    },
+                                    "&:hover fieldset": {
+                                        borderColor: "#008DDA",   // on hover
+                                    },
+                                    "&.Mui-focused fieldset": {
+                                        borderColor: "#008DDA",   // when focused
+                                    },
+                                },
+                                // 🔹 Change input text color
+                                "& .MuiInputBase-input": {
+                                    color: "#e3f2fd", // text inside the field
+                                },
+                                // 🔹 Change label color
+                                "& .MuiInputLabel-root": {
+                                    color: "#e3f2fd", // default label color
+                                },
+                                "& .MuiInputLabel-root.Mui-focused": {
+                                    color: "#e3f2fd", // label color when focused
+                                }, }}
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
                         />
@@ -110,7 +160,7 @@ const Login = () => {
                                 mt: 3,
                                 fontSize: 20,
                                 backgroundColor: "#008DDA",
-                                color: "#F7EEDD",
+                                color: "#e3f2fd",
                                 fontWeight: "bold",
                             }}
                         >
