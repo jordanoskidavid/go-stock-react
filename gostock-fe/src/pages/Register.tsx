@@ -4,14 +4,14 @@ import {
     Typography,
     Alert,
     Box,
-    TextField,
-    Button,
     MenuItem,
     Select,
     InputLabel,
     FormControl,
 } from "@mui/material";
 import {useRegister} from "../hooks/useRegister.ts";
+import SubmitButton from "../components/ui/submitButton.tsx";
+import CustomTextField from "../components/ui/customTextField.tsx";
 
 const Register = () => {
     const {
@@ -26,7 +26,6 @@ const Register = () => {
         error,
         handleSubmit,
     } = useRegister();
-
     return (
         <Container
             maxWidth={false}
@@ -85,7 +84,6 @@ const Register = () => {
                     </Typography>
                 </Box>
 
-                {/* Right side = form */}
                 <Box sx={{ flex: 1, p: 4, mt: { xs: -3, md: 0 }, color:"#e3f2fd"}}>
                     <Typography variant="h4" align="center" gutterBottom>
                         Register
@@ -98,97 +96,11 @@ const Register = () => {
                     )}
 
                     <Box component="form" onSubmit={handleSubmit} noValidate>
-                        <TextField
-                            fullWidth
-                            margin="normal"
-                            label="Name"
-                            value={name}
-                            sx={{  "& .MuiOutlinedInput-root": {
-                                    "& fieldset": {
-                                        borderColor: "#e3f2fd",
-                                    },
-                                    "&:hover fieldset": {
-                                        borderColor: "#008DDA",
-                                    },
-                                    "&.Mui-focused fieldset": {
-                                        borderColor: "#008DDA",
-                                    },
-                                },
-                                // 🔹 Change input text color
-                                "& .MuiInputBase-input": {
-                                    color: "#e3f2fd",
-                                },
-                                // 🔹 Change label color
-                                "& .MuiInputLabel-root": {
-                                    color: "#e3f2fd",
-                                },
-                                "& .MuiInputLabel-root.Mui-focused": {
-                                    color: "#e3f2fd",
-                                },}}
-                            onChange={(e) => setName(e.target.value)}
-                        />
+                        <CustomTextField label={"Name"} value={name} onChange={(e) => setName(e.target.value)} />
 
-                        <TextField
-                            fullWidth
-                            margin="normal"
-                            label="Email"
-                            type="email"
-                            value={email}
-                            sx={{  "& .MuiOutlinedInput-root": {
-                                    "& fieldset": {
-                                        borderColor: "#e3f2fd",
-                                    },
-                                    "&:hover fieldset": {
-                                        borderColor: "#008DDA",
-                                    },
-                                    "&.Mui-focused fieldset": {
-                                        borderColor: "#008DDA",
-                                    },
-                                },
-                                // 🔹 Change input text color
-                                "& .MuiInputBase-input": {
-                                    color: "#e3f2fd",
-                                },
-                                // 🔹 Change label color
-                                "& .MuiInputLabel-root": {
-                                    color: "#e3f2fd",
-                                },
-                                "& .MuiInputLabel-root.Mui-focused": {
-                                    color: "#e3f2fd",
-                                },}}
-                            onChange={(e) => setEmail(e.target.value)}
-                        />
+                        <CustomTextField label={"Email"} type={"email"} value={email} onChange={(e) => setEmail(e.target.value)} />
 
-                        <TextField
-                            fullWidth
-                            margin="normal"
-                            label="Password"
-                            type="password"
-                            value={password}
-                            sx={{  "& .MuiOutlinedInput-root": {
-                                    "& fieldset": {
-                                        borderColor: "#e3f2fd",
-                                    },
-                                    "&:hover fieldset": {
-                                        borderColor: "#008DDA",
-                                    },
-                                    "&.Mui-focused fieldset": {
-                                        borderColor: "#008DDA",
-                                    },
-                                },
-                                // 🔹 Change input text color
-                                "& .MuiInputBase-input": {
-                                    color: "#e3f2fd",
-                                },
-                                // 🔹 Change label color
-                                "& .MuiInputLabel-root": {
-                                    color: "#e3f2fd",
-                                },
-                                "& .MuiInputLabel-root.Mui-focused": {
-                                    color: "#e3f2fd",
-                                },}}
-                            onChange={(e) => setPassword(e.target.value)}
-                        />
+                        <CustomTextField label={"Password"} type={"Password"} value={password} onChange={(e) => setPassword(e.target.value)} />
 
                         <FormControl fullWidth margin="normal">
                             <InputLabel   sx={{
@@ -223,21 +135,7 @@ const Register = () => {
                                 <MenuItem value="admin">Admin</MenuItem>
                             </Select>
                         </FormControl>
-
-                        <Button
-                            fullWidth
-                            variant="contained"
-                            type="submit"
-                            sx={{
-                                mt: 3,
-                                fontSize: 20,
-                                backgroundColor: "#008DDA",
-                                color: "#e3f2fd",
-                                fontWeight: "bold",
-                            }}
-                        >
-                            Register
-                        </Button>
+                        <SubmitButton text={"Register"}/>
                     </Box>
                 </Box>
             </Paper>
