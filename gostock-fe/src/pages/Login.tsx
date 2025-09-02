@@ -136,11 +136,11 @@ const Login = () => {
                                         borderColor: "#008DDA",
                                     },
                                 },
-                                // 🔹 Change input text color
+
                                 "& .MuiInputBase-input": {
                                     color: "#e3f2fd",
                                 },
-                                // 🔹 Change label color
+
                                 "& .MuiInputLabel-root": {
                                     color: "#e3f2fd",
                                 },

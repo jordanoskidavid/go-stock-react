@@ -7,12 +7,10 @@ const HeaderHome = () => {
             sx={{
                 display: "flex",
                 alignItems: "center",
-                px: 3,
+                px: 1,
                 backgroundColor: "#002A41",
-                py: 2,
             }}
         >
-            {/* Left: Logo */}
             <Box sx={{ flexShrink: 0 }}>
                 <Link to="/">
                     <img
@@ -23,14 +21,12 @@ const HeaderHome = () => {
                 </Link>
             </Box>
 
-            {/* Middle: Hello David */}
             <Box sx={{ flex: 1, textAlign: "center" }}>
-                <Typography variant="h3">
+                <Typography variant="h3" sx={{ color:"#e3f2fd"}}>
                     Hello David!
                 </Typography>
             </Box>
 
-            {/* Right: Profile Picture */}
             <Box sx={{ flexShrink: 0 }}>
                 <Link to="/profile">
                     <img
