@@ -44,6 +44,7 @@ const Register = () => {
                     flexDirection: { xs: "column", md: "row" },
                     borderRadius: 3,
                     overflow: "hidden",
+                    backgroundColor: "#002A41",
                     width: { xs: "90%", md: "80%" },
                     maxWidth: "900px",
                 }}
@@ -77,6 +78,7 @@ const Register = () => {
                         sx={{
                             fontWeight: "bold",
                             fontSize: { xs: "1.8rem", sm: "1.25rem", md: "1.5rem" },
+                            color: "#e3f2fd",
                         }}
                     >
                         Simplify. Organize. Succeed
@@ -84,13 +86,13 @@ const Register = () => {
                 </Box>
 
                 {/* Right side = form */}
-                <Box sx={{ flex: 1, p: 4, mt: { xs: -3, md: 0 }}}>
+                <Box sx={{ flex: 1, p: 4, mt: { xs: -3, md: 0 }, color:"#e3f2fd"}}>
                     <Typography variant="h4" align="center" gutterBottom>
                         Register
                     </Typography>
 
                     {error && (
-                        <Alert severity="error" sx={{ mb: 2 }}>
+                        <Alert severity="error" sx={{ mb: 2,backgroundColor:"#e3f2fd", color:"#002A41" }}>
                             {error}
                         </Alert>
                     )}
@@ -101,6 +103,28 @@ const Register = () => {
                             margin="normal"
                             label="Name"
                             value={name}
+                            sx={{  "& .MuiOutlinedInput-root": {
+                                    "& fieldset": {
+                                        borderColor: "#e3f2fd",   // default border
+                                    },
+                                    "&:hover fieldset": {
+                                        borderColor: "#008DDA",   // on hover
+                                    },
+                                    "&.Mui-focused fieldset": {
+                                        borderColor: "#008DDA",   // when focused
+                                    },
+                                },
+                                // 🔹 Change input text color
+                                "& .MuiInputBase-input": {
+                                    color: "#e3f2fd", // text inside the field
+                                },
+                                // 🔹 Change label color
+                                "& .MuiInputLabel-root": {
+                                    color: "#e3f2fd", // default label color
+                                },
+                                "& .MuiInputLabel-root.Mui-focused": {
+                                    color: "#e3f2fd", // label color when focused
+                                },}}
                             onChange={(e) => setName(e.target.value)}
                         />
 
@@ -110,6 +134,28 @@ const Register = () => {
                             label="Email"
                             type="email"
                             value={email}
+                            sx={{  "& .MuiOutlinedInput-root": {
+                                    "& fieldset": {
+                                        borderColor: "#e3f2fd",   // default border
+                                    },
+                                    "&:hover fieldset": {
+                                        borderColor: "#008DDA",   // on hover
+                                    },
+                                    "&.Mui-focused fieldset": {
+                                        borderColor: "#008DDA",   // when focused
+                                    },
+                                },
+                                // 🔹 Change input text color
+                                "& .MuiInputBase-input": {
+                                    color: "#e3f2fd", // text inside the field
+                                },
+                                // 🔹 Change label color
+                                "& .MuiInputLabel-root": {
+                                    color: "#e3f2fd", // default label color
+                                },
+                                "& .MuiInputLabel-root.Mui-focused": {
+                                    color: "#e3f2fd", // label color when focused
+                                },}}
                             onChange={(e) => setEmail(e.target.value)}
                         />
 
@@ -119,12 +165,55 @@ const Register = () => {
                             label="Password"
                             type="password"
                             value={password}
+                            sx={{  "& .MuiOutlinedInput-root": {
+                                    "& fieldset": {
+                                        borderColor: "#e3f2fd",   // default border
+                                    },
+                                    "&:hover fieldset": {
+                                        borderColor: "#008DDA",   // on hover
+                                    },
+                                    "&.Mui-focused fieldset": {
+                                        borderColor: "#008DDA",   // when focused
+                                    },
+                                },
+                                // 🔹 Change input text color
+                                "& .MuiInputBase-input": {
+                                    color: "#e3f2fd", // text inside the field
+                                },
+                                // 🔹 Change label color
+                                "& .MuiInputLabel-root": {
+                                    color: "#e3f2fd", // default label color
+                                },
+                                "& .MuiInputLabel-root.Mui-focused": {
+                                    color: "#e3f2fd", // label color when focused
+                                },}}
                             onChange={(e) => setPassword(e.target.value)}
                         />
 
                         <FormControl fullWidth margin="normal">
-                            <InputLabel>Role</InputLabel>
+                            <InputLabel   sx={{
+                                color: "#e3f2fd",
+                                "&.Mui-focused": {
+                                    color: "#e3f2fd",
+                                },
+                            }}>Role</InputLabel>
                             <Select
+                                sx={{   // 🔹 Border colors
+                                    "& .MuiOutlinedInput-notchedOutline": {
+                                        borderColor: "#e3f2fd", // default border
+                                    },
+                                    "&:hover .MuiOutlinedInput-notchedOutline": {
+                                        borderColor: "#008DDA", // on hover
+                                    },
+                                    "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+                                        borderColor: "#008DDA", // when focused
+                                    },
+
+                                    // 🔹 Text color inside select
+                                    "& .MuiSelect-select": {
+                                        color: "#e3f2fd",
+                                    },
+                                    }}
                                 value={role}
                                 label="Role"
                                 onChange={(e) => setRole(e.target.value)}
@@ -143,7 +232,7 @@ const Register = () => {
                                 mt: 3,
                                 fontSize: 20,
                                 backgroundColor: "#008DDA",
-                                color: "#F7EEDD",
+                                color: "#e3f2fd",
                                 fontWeight: "bold",
                             }}
                         >
