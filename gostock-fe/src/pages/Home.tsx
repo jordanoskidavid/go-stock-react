@@ -41,6 +41,7 @@ const Home = () => {
                     <Card title="CATEGORIES" />
                     <Card title="USERS" />
                     <Card title="PRODUCTS" />
+                    <Card title="ORDERS" />
                 </Box>
             </Box>
 

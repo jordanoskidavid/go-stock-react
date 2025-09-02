@@ -22,7 +22,7 @@ const HeaderHome = () => {
             </Box>
 
             <Box sx={{ flex: 1, textAlign: "center" }}>
-                <Typography variant="h3" sx={{ color:"#e3f2fd"}}>
+                <Typography variant="h4" sx={{ color:"#e3f2fd"}}>
                     Hello David!
                 </Typography>
             </Box>
