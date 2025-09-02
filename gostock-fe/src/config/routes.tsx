@@ -1,6 +1,6 @@
 import * as React from "react";
 import Home from "../pages/Home.tsx";
-import About from "../pages/About.tsx";
+import UserProfile from "../pages/UserProfile.tsx";
 import Login from "../pages/Login.tsx";
 import Register from "../pages/Register.tsx";
 import Users from "../pages/Users.tsx";
@@ -12,7 +12,7 @@ export interface RouteType {
 
 export const routes: RouteType[] = [
     { path: "/", element: Home },//dashboard
-    { path: "/about", element: About },
+    { path: "/profile", element: UserProfile },
     { path: "/login", element: Login},
     { path: "/register", element: Register},
     { path: "/users", element: Users},
