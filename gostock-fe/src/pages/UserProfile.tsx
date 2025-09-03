@@ -13,8 +13,8 @@ import {
 import SubmitButton from "../components/ui/submitButton.tsx";
 import CustomTextField from "../components/ui/customTextField.tsx";
 import { useUserProfile } from "../hooks/useUserProfile.ts";
-import { useNavigate } from "react-router-dom"; // or next/router if using Next.js
-
+import HeaderProfile from "../components/pages/profile/HeaderProfile.tsx";
+import FooterHome from "../components/pages/home/FooterHome.tsx";
 const UserProfile = () => {
     const {
         editMode,
@@ -28,10 +28,10 @@ const UserProfile = () => {
         handleSave,
     } = useUserProfile();
 
-    const navigate = useNavigate(); // for react-router-dom navigation
-
     return (
-        <Container
+<>
+    <HeaderProfile></HeaderProfile>
+    <Container
             maxWidth={false}
             sx={{
                 display: "flex",
@@ -43,17 +43,6 @@ const UserProfile = () => {
                 gap: 2,
             }}
         >
-            <Box sx={{ width: "90%", maxWidth: 900, textAlign: "left" }}>
-                <Button
-                    variant="text"
-                    color="primary"
-                    onClick={() => navigate("/")} // navigate to home
-                    sx={{ color: "#00AEEF" }}
-                >
-                    Go to Home
-                </Button>
-            </Box>
-
             <Paper
                 elevation={3}
                 sx={{
@@ -62,6 +51,7 @@ const UserProfile = () => {
                     borderRadius: 3,
                     backgroundColor: "#002A41",
                     display: "flex",
+                    p: 2,
                     flexDirection: { xs: "column", md: "row" },
                     overflow: "hidden",
                 }}
@@ -76,7 +66,7 @@ const UserProfile = () => {
                         alignItems: "center",
                         justifyContent: "center",
                         p: 4,
-                        gap: 2,
+                        gap: 1,
                     }}
                 >
                     <Avatar
@@ -89,7 +79,7 @@ const UserProfile = () => {
                             <Typography variant="h5" fontWeight="bold" color="#e3f2fd">
                                 {name}
                             </Typography>
-                            <Typography variant="body1" color="#e3f2fd">
+                            <Typography variant="h5" color="#e3f2fd">
                                 {role}
                             </Typography>
                         </>
@@ -104,7 +94,7 @@ const UserProfile = () => {
                         flexDirection: "column",
                         justifyContent: "flex-start",
                         p: 4,
-                        gap: 2,
+                        gap: 1,
                     }}
                 >
                     {editMode ? (
@@ -147,10 +137,10 @@ const UserProfile = () => {
                         </>
                     ) : (
                         <>
-                            <Typography variant="h5" fontWeight="bold" color="#e3f2fd">
+                            <Typography variant="h4" fontWeight="bold" color="#e3f2fd">
                                 Email
                             </Typography>
-                            <Typography variant="body1" color="#e3f2fd">
+                            <Typography variant="h5" color="#e3f2fd">
                                 {email}
                             </Typography>
                         </>
@@ -165,8 +155,13 @@ const UserProfile = () => {
                                     variant="outlined"
                                     onClick={() => setEditMode(false)}
                                     sx={{
-                                        color: "#e3f2fd",
+                                        mt: 3,
+                                        fontSize: 20,
+                                        pl: 5,
+                                        pr:5,
                                         borderColor: "#008DDA",
+                                        color: "#e3f2fd",
+                                        fontWeight: "bold",
                                         "&:hover": { borderColor: "#00AEEF", color: "#00AEEF" },
                                     }}
                                 >
@@ -179,7 +174,10 @@ const UserProfile = () => {
                                     variant="contained"
                                     onClick={() => setEditMode(true)}
                                     sx={{
+                                        mt: 3,
+                                        fontSize: 18,
                                         backgroundColor: "#008DDA",
+                                        color: "#e3f2fd",
                                         "&:hover": { backgroundColor: "#00AEEF" },
                                     }}
                                 >
@@ -188,9 +186,11 @@ const UserProfile = () => {
                                 <Button
                                     variant="outlined"
                                     sx={{
-                                        color: "#e3f2fd",
+                                        mt: 3,
+                                        fontSize: 18,
                                         borderColor: "#008DDA",
-                                        "&:hover": { borderColor: "#00AEEF", color: "#00AEEF" },
+                                        color: "#e3f2fd",
+                                        "&:hover": { borderColor: "#008DDA", color: "#008DDA" },
                                     }}
                                 >
                                     Logout
@@ -201,6 +201,8 @@ const UserProfile = () => {
                 </Box>
             </Paper>
         </Container>
+    <FooterHome/>
+</>
     );
 };
 
