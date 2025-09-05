@@ -11,8 +11,8 @@ import {
     TablePagination,
 } from "@mui/material";
 import { Edit, Delete } from "@mui/icons-material";
-import React, { useState } from "react";
-import type { Category } from "../../../pages/Categories.tsx";
+import { useTablePagination } from "../../../hooks/useTablePagination.ts";
+import type {Category} from "../../../hooks/useCategories.ts"; // your hook path
 
 type Props = {
     categories: Category[];
@@ -21,19 +21,8 @@ type Props = {
 };
 
 const CategoriesList = ({ categories, onEdit, onDelete }: Props) => {
-    const [page, setPage] = useState(0);
-    const [rowsPerPage, setRowsPerPage] = useState(5);
-
-    const handleChangePage = (_: unknown, newPage: number) => {
-        setPage(newPage);
-    };
-
-    const handleChangeRowsPerPage = (
-        event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-    ) => {
-        setRowsPerPage(parseInt(event.target.value, 10));
-        setPage(0);
-    };
+    const { page, rowsPerPage, handleChangePage, handleChangeRowsPerPage } =
+        useTablePagination(5);
 
     if (!categories.length) return <Typography>No categories found.</Typography>;
 
@@ -41,7 +30,7 @@ const CategoriesList = ({ categories, onEdit, onDelete }: Props) => {
         <Paper
             sx={{
                 backgroundColor: "#002A41",
-                borderRadius: 2,
+                borderRadius: 5,
                 maxWidth: 900,
                 width: "100%",
                 mx: "auto",
@@ -51,9 +40,15 @@ const CategoriesList = ({ categories, onEdit, onDelete }: Props) => {
                 <Table>
                     <TableHead>
                         <TableRow>
-                            <TableCell sx={{ color: "#e3f2fd" }}>ID</TableCell>
-                            <TableCell sx={{ color: "#e3f2fd" }}>Name</TableCell>
-                            <TableCell sx={{ color: "#e3f2fd" }}>Actions</TableCell>
+                            <TableCell sx={{ color: "#e3f2fd", fontWeight: "bold", fontSize: "20px" }}>
+                                ID
+                            </TableCell>
+                            <TableCell sx={{ color: "#e3f2fd", fontWeight: "bold", fontSize: "20px" }}>
+                                Name
+                            </TableCell>
+                            <TableCell align="right" sx={{ color: "#e3f2fd", fontWeight: "bold", fontSize: "20px" }}>
+                            Action
+                            </TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
@@ -61,9 +56,9 @@ const CategoriesList = ({ categories, onEdit, onDelete }: Props) => {
                             .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                             .map((cat) => (
                                 <TableRow key={cat.id}>
-                                    <TableCell sx={{ color: "#e3f2fd" }}>{cat.id}</TableCell>
-                                    <TableCell sx={{ color: "#e3f2fd" }}>{cat.name}</TableCell>
-                                    <TableCell>
+                                    <TableCell sx={{ color: "#e3f2fd", fontSize: "20px" }}>{cat.id}</TableCell>
+                                    <TableCell sx={{ color: "#e3f2fd", fontSize: "20px" }}>{cat.name}</TableCell>
+                                    <TableCell  align="right">
                                         <IconButton onClick={() => onEdit(cat)}>
                                             <Edit sx={{ color: "#00AEEF" }} />
                                         </IconButton>
@@ -77,7 +72,6 @@ const CategoriesList = ({ categories, onEdit, onDelete }: Props) => {
                 </Table>
             </TableContainer>
 
-            {/* Pagination controls */}
             <TablePagination
                 component="div"
                 count={categories.length}

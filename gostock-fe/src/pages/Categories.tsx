@@ -1,18 +1,18 @@
-import { useState } from "react";
 import { Box, Button, Typography } from "@mui/material";
 import CategoryForm from "../components/pages/categories/CategoryForm.tsx";
 import CategoriesList from "../components/pages/categories/CategoriesList.tsx";
 import FooterHome from "../components/pages/home/FooterHome.tsx";
 import HeaderCategory from "../components/pages/categories/HeaderCategory.tsx";
-
-export type Category = {
-    id: number;
-    name: string;
-};
+import { useCategories } from "../hooks/useCategories.ts";
 
 const Categories = () => {
-    // ✅ Start with some mock data
-    const [categories, setCategories] = useState<Category[]>([
+    const {
+        categories,
+        editingCategory,
+        setEditingCategory,
+        handleSave,
+        handleDelete,
+    } = useCategories([
         { id: 1, name: "Electronics" },
         { id: 2, name: "Clothing" },
         { id: 3, name: "Clothing" },
@@ -22,30 +22,6 @@ const Categories = () => {
         { id: 7, name: "Clothing" },
         { id: 8, name: "Clothing" },
     ]);
-
-    const [editingCategory, setEditingCategory] = useState<Category | null>(null);
-
-    const handleSave = (category: Omit<Category, "id">, id?: number) => {
-        if (id) {
-            setCategories((prev) =>
-                prev.map((cat) =>
-                    cat.id === id ? { ...cat, ...category } : cat
-                )
-            );
-        } else {
-            // create
-            const newCat = {
-                id: categories.length ? Math.max(...categories.map((c) => c.id)) + 1 : 1,
-                ...category,
-            };
-            setCategories((prev) => [...prev, newCat]);
-        }
-        setEditingCategory(null);
-    };
-
-    const handleDelete = (id: number) => {
-        setCategories((prev) => prev.filter((cat) => cat.id !== id));
-    };
 
     return (
         <Box
@@ -59,11 +35,11 @@ const Categories = () => {
 
             <Box
                 sx={{
-                    flexGrow: 1,       // 👈 same as Home page,
+                    flexGrow: 1,
                     display: "flex",
                     flexDirection: "column",
                     gap: 2,
-                    overflowY: "auto", // scrolls if content too tall
+                    overflowY: "auto",
                 }}
             >
                 <Typography variant="h4" gutterBottom color="#e3f2fd">
@@ -95,7 +71,6 @@ const Categories = () => {
 
             <FooterHome />
         </Box>
-
     );
 };
 
