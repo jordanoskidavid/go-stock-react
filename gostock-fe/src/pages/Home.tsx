@@ -2,6 +2,7 @@ import { Box, Typography } from "@mui/material";
 import HeaderHome from "../components/pages/home/HeaderHome.tsx";
 import FooterHome from "../components/pages/home/FooterHome";
 import Card from "../components/ui/card.tsx";
+import { Link } from "react-router-dom";
 const Home = () => {
     return (
         <Box
@@ -37,7 +38,9 @@ const Home = () => {
                         gap: 4,
                     }}
                 >
-                    <Card title="CATEGORIES" />
+                    <Link to={'/categories'} style={{ textDecoration: "none" }}>
+                        <Card title="CATEGORIES" />
+                    </Link>
                     <Card title="USERS" />
                     <Card title="PRODUCTS" />
                     <Card title="ORDERS" />

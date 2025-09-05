@@ -4,6 +4,7 @@ import UserProfile from "../pages/UserProfile.tsx";
 import Login from "../pages/Login.tsx";
 import Register from "../pages/Register.tsx";
 import Users from "../pages/Users.tsx";
+import Categories from "../pages/Categories.tsx";
 
 export interface RouteType {
     path: string;
@@ -16,5 +17,7 @@ export const routes: RouteType[] = [
     { path: "/login", element: Login},
     { path: "/register", element: Register},
     { path: "/users", element: Users},
+    { path: "/categories", element: Categories},
+
 ];
 
