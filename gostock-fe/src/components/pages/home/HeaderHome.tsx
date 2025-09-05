@@ -7,7 +7,7 @@ const HeaderHome = () => {
             sx={{
                 display: "flex",
                 alignItems: "center",
-                px: 1,
+                px: 2,
                 backgroundColor: "#002A41",
             }}
         >

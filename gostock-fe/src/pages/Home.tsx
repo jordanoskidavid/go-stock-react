@@ -2,7 +2,6 @@ import { Box, Typography } from "@mui/material";
 import HeaderHome from "../components/pages/home/HeaderHome.tsx";
 import FooterHome from "../components/pages/home/FooterHome";
 import Card from "../components/ui/card.tsx";
-
 const Home = () => {
     return (
         <Box

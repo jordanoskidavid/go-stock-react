@@ -12,6 +12,7 @@ import {
 import {useRegister} from "../hooks/useRegister.ts";
 import SubmitButton from "../components/ui/submitButton.tsx";
 import CustomTextField from "../components/ui/customTextField.tsx";
+import {Helmet} from "react-helmet-async";
 
 const Register = () => {
     const {
@@ -36,6 +37,10 @@ const Register = () => {
                 minHeight: "100dvh",
             }}
         >
+            <Helmet>
+                <title>Register | GoStock</title>
+                <meta name="description" content="Register with your credentials." />
+            </Helmet>
             <Paper
                 elevation={3}
                 sx={{
@@ -48,7 +53,7 @@ const Register = () => {
                     maxWidth: "900px",
                 }}
             >
-                {/* Left side = logo */}
+
                 <Box
                     sx={{
                         flex: 1,

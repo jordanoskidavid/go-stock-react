@@ -7,16 +7,16 @@ const HeaderProfile = () => {
             sx={{
                 display: "flex",
                 alignItems: "center",
-                px: 1,
+                px: 2,
                 backgroundColor: "#002A41",
             }}
         >
             <Box sx={{ flexShrink: 0 }}>
                 <Link to="/">
                     <img
-                        src="/logo.png"
+                        src="src/assets/backArrow.png"
                         alt="logo"
-                        style={{ width: "110px", height: "110px", cursor: "pointer" }}
+                        style={{ width: "60px", height: "60px", cursor: "pointer" }}
                     />
                 </Link>
             </Box>
