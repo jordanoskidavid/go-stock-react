@@ -13,7 +13,9 @@ import {
 import SubmitButton from "../components/ui/submitButton.tsx";
 import CustomTextField from "../components/ui/customTextField.tsx";
 import { useUserProfile } from "../hooks/useUserProfile.ts";
-import { useNavigate } from "react-router-dom"; // or next/router if using Next.js
+import HeaderProfile from "../components/pages/profile/HeaderProfile.tsx";
+import FooterHome from "../components/pages/home/FooterHome.tsx";
+import { Helmet } from "react-helmet-async";
 
 const UserProfile = () => {
     const {
@@ -28,179 +30,189 @@ const UserProfile = () => {
         handleSave,
     } = useUserProfile();
 
-    const navigate = useNavigate(); // for react-router-dom navigation
-
     return (
-        <Container
-            maxWidth={false}
+        <Box
             sx={{
                 display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                minHeight: "100dvh",
-                p: 2,
                 flexDirection: "column",
-                gap: 2,
+                minHeight: "100dvh",
+                backgroundColor: "#001E2B",
             }}
         >
-            <Box sx={{ width: "90%", maxWidth: 900, textAlign: "left" }}>
-                <Button
-                    variant="text"
-                    color="primary"
-                    onClick={() => navigate("/")} // navigate to home
-                    sx={{ color: "#00AEEF" }}
-                >
-                    Go to Home
-                </Button>
-            </Box>
+            <Helmet>
+                <title>Your Profile | GoStock</title>
+                <meta name="description" content="Manage your GoStock profile settings here." />
+            </Helmet>
+            <HeaderProfile />
 
-            <Paper
-                elevation={3}
+            <Container
+                maxWidth={false}
                 sx={{
-                    width: "90%",
-                    maxWidth: 900,
-                    borderRadius: 3,
-                    backgroundColor: "#002A41",
+                    flex: 1,
                     display: "flex",
-                    flexDirection: { xs: "column", md: "row" },
-                    overflow: "hidden",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    p: 2,
                 }}
             >
-                {/* Left side: Avatar + Info */}
-                <Box
+                <Paper
+                    elevation={3}
                     sx={{
-                        flex: 1,
+                        width: "90%",
+                        maxWidth: 900,
+                        borderRadius: 3,
                         backgroundColor: "#002A41",
                         display: "flex",
-                        flexDirection: "column",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        p: 4,
-                        gap: 2,
+                        p: 2,
+                        flexDirection: { xs: "column", md: "row" },
+                        overflow: "hidden",
                     }}
                 >
-                    <Avatar
-                        src="/profilePicture.png"
-                        alt="Avatar Picture"
-                        sx={{ width: 120, height: 120 }}
-                    />
-                    {!editMode && (
-                        <>
-                            <Typography variant="h5" fontWeight="bold" color="#e3f2fd">
-                                {name}
-                            </Typography>
-                            <Typography variant="body1" color="#e3f2fd">
-                                {role}
-                            </Typography>
-                        </>
-                    )}
-                </Box>
-
-                {/* Right side: Fields + Buttons */}
-                <Box
-                    sx={{
-                        flex: 1,
-                        display: "flex",
-                        flexDirection: "column",
-                        justifyContent: "flex-start",
-                        p: 4,
-                        gap: 2,
-                    }}
-                >
-                    {editMode ? (
-                        <>
-                            <CustomTextField
-                                label="Name"
-                                value={name}
-                                onChange={(e) => setName(e.target.value)}
-                            />
-                            <CustomTextField
-                                label="Email"
-                                value={email}
-                                onChange={(e) => setEmail(e.target.value)}
-                            />
-                            <FormControl fullWidth margin="normal">
-                                <InputLabel
-                                    sx={{
-                                        color: "#e3f2fd",
-                                        "&.Mui-focused": { color: "#e3f2fd" },
-                                    }}
-                                >
-                                    Role
-                                </InputLabel>
-                                <Select
-                                    sx={{
-                                        "& .MuiOutlinedInput-notchedOutline": { borderColor: "#e3f2fd" },
-                                        "&:hover .MuiOutlinedInput-notchedOutline": { borderColor: "#008DDA" },
-                                        "&.Mui-focused .MuiOutlinedInput-notchedOutline": { borderColor: "#008DDA" },
-                                        "& .MuiSelect-select": { color: "#e3f2fd" },
-                                    }}
-                                    value={role}
-                                    label="Role"
-                                    onChange={(e) => setRole(e.target.value)}
-                                >
-                                    <MenuItem value="manager">Manager</MenuItem>
-                                    <MenuItem value="employee">Employee</MenuItem>
-                                    <MenuItem value="admin">Admin</MenuItem>
-                                </Select>
-                            </FormControl>
-                        </>
-                    ) : (
-                        <>
-                            <Typography variant="h5" fontWeight="bold" color="#e3f2fd">
-                                Email
-                            </Typography>
-                            <Typography variant="body1" color="#e3f2fd">
-                                {email}
-                            </Typography>
-                        </>
-                    )}
-
-                    {/* Action Buttons */}
-                    <Box sx={{ display: "flex", gap: 2, mt: 2 }}>
-                        {editMode ? (
+                    <Box
+                        sx={{
+                            flex: 1,
+                            display: "flex",
+                            flexDirection: "column",
+                            alignItems: "center",
+                            justifyContent: "center",
+                            p: 4,
+                            gap: 1,
+                        }}
+                    >
+                        <Avatar
+                            src="/profilePicture.png"
+                            alt="Avatar Picture"
+                            sx={{ width: 120, height: 120 }}
+                        />
+                        {!editMode && (
                             <>
-                                <SubmitButton text="Save" onClick={handleSave} />
-                                <Button
-                                    variant="outlined"
-                                    onClick={() => setEditMode(false)}
-                                    sx={{
-                                        color: "#e3f2fd",
-                                        borderColor: "#008DDA",
-                                        "&:hover": { borderColor: "#00AEEF", color: "#00AEEF" },
-                                    }}
-                                >
-                                    Cancel
-                                </Button>
-                            </>
-                        ) : (
-                            <>
-                                <Button
-                                    variant="contained"
-                                    onClick={() => setEditMode(true)}
-                                    sx={{
-                                        backgroundColor: "#008DDA",
-                                        "&:hover": { backgroundColor: "#00AEEF" },
-                                    }}
-                                >
-                                    Edit Profile
-                                </Button>
-                                <Button
-                                    variant="outlined"
-                                    sx={{
-                                        color: "#e3f2fd",
-                                        borderColor: "#008DDA",
-                                        "&:hover": { borderColor: "#00AEEF", color: "#00AEEF" },
-                                    }}
-                                >
-                                    Logout
-                                </Button>
+                                <Typography variant="h5" fontWeight="bold" color="#e3f2fd">
+                                    {name}
+                                </Typography>
+                                <Typography variant="h5" color="#e3f2fd">
+                                    {role}
+                                </Typography>
                             </>
                         )}
                     </Box>
-                </Box>
-            </Paper>
-        </Container>
+
+                    <Box
+                        sx={{
+                            flex: 1,
+                            display: "flex",
+                            flexDirection: "column",
+                            justifyContent: "flex-start",
+                            p: 4,
+                            gap: 1,
+                        }}
+                    >
+                        {editMode ? (
+                            <>
+                                <CustomTextField
+                                    label="Name"
+                                    value={name}
+                                    onChange={(e) => setName(e.target.value)}
+                                />
+                                <CustomTextField
+                                    label="Email"
+                                    value={email}
+                                    onChange={(e) => setEmail(e.target.value)}
+                                />
+                                <FormControl fullWidth margin="normal">
+                                    <InputLabel
+                                        sx={{
+                                            color: "#e3f2fd",
+                                            "&.Mui-focused": { color: "#e3f2fd" },
+                                        }}
+                                    >
+                                        Role
+                                    </InputLabel>
+                                    <Select
+                                        sx={{
+                                            "& .MuiOutlinedInput-notchedOutline": { borderColor: "#e3f2fd" },
+                                            "&:hover .MuiOutlinedInput-notchedOutline": { borderColor: "#008DDA" },
+                                            "&.Mui-focused .MuiOutlinedInput-notchedOutline": { borderColor: "#008DDA" },
+                                            "& .MuiSelect-select": { color: "#e3f2fd" },
+                                        }}
+                                        value={role}
+                                        label="Role"
+                                        onChange={(e) => setRole(e.target.value)}
+                                    >
+                                        <MenuItem value="manager">Manager</MenuItem>
+                                        <MenuItem value="employee">Employee</MenuItem>
+                                        <MenuItem value="admin">Admin</MenuItem>
+                                    </Select>
+                                </FormControl>
+                            </>
+                        ) : (
+                            <>
+                                <Typography variant="h4" fontWeight="bold" color="#e3f2fd">
+                                    Email
+                                </Typography>
+                                <Typography variant="h5" color="#e3f2fd">
+                                    {email}
+                                </Typography>
+                            </>
+                        )}
+
+                        {/* Action Buttons */}
+                        <Box sx={{ display: "flex", gap: 2, mt: 2 }}>
+                            {editMode ? (
+                                <>
+                                    <SubmitButton text="Save" onClick={handleSave} />
+                                    <Button
+                                        variant="outlined"
+                                        onClick={() => setEditMode(false)}
+                                        sx={{
+                                            mt: 3,
+                                            fontSize: 20,
+                                            pl: 5,
+                                            pr: 5,
+                                            borderColor: "#008DDA",
+                                            color: "#e3f2fd",
+                                            fontWeight: "bold",
+                                            "&:hover": { borderColor: "#00AEEF", color: "#00AEEF" },
+                                        }}
+                                    >
+                                        Cancel
+                                    </Button>
+                                </>
+                            ) : (
+                                <>
+                                    <Button
+                                        variant="contained"
+                                        onClick={() => setEditMode(true)}
+                                        sx={{
+                                            mt: 3,
+                                            fontSize: 18,
+                                            backgroundColor: "#008DDA",
+                                            color: "#e3f2fd",
+                                            "&:hover": { backgroundColor: "#00AEEF" },
+                                        }}
+                                    >
+                                        Edit Profile
+                                    </Button>
+                                    <Button
+                                        variant="outlined"
+                                        sx={{
+                                            mt: 3,
+                                            fontSize: 18,
+                                            borderColor: "#008DDA",
+                                            color: "#e3f2fd",
+                                            "&:hover": { borderColor: "#008DDA", color: "#008DDA" },
+                                        }}
+                                    >
+                                        Logout
+                                    </Button>
+                                </>
+                            )}
+                        </Box>
+                    </Box>
+                </Paper>
+            </Container>
+
+            <FooterHome />
+        </Box>
     );
 };
 

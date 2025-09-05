@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { Typography, Box } from "@mui/material";
 
-const HeaderHome = () => {
+const HeaderProfile = () => {
     return (
         <Box
             sx={{
@@ -14,25 +14,25 @@ const HeaderHome = () => {
             <Box sx={{ flexShrink: 0 }}>
                 <Link to="/">
                     <img
-                        src="/logo.png"
+                        src="src/assets/backArrow.png"
                         alt="logo"
-                        style={{ width: "110px", height: "110px", cursor: "pointer" }}
+                        style={{ width: "60px", height: "60px", cursor: "pointer" }}
                     />
                 </Link>
             </Box>
 
             <Box sx={{ flex: 1, textAlign: "center" }}>
                 <Typography variant="h4" sx={{ color:"#e3f2fd"}}>
-                    Hello David!
+                   Your Profile
                 </Typography>
             </Box>
 
             <Box sx={{ flexShrink: 0 }}>
-                <Link to="/profile">
+                <Link to="/">
                     <img
-                        src="/profilePicture.png"
-                        alt="profile"
-                        style={{ width: "68px", height: "60px", cursor: "pointer" }}
+                        src="/logo.png"
+                        alt="logo"
+                        style={{ width: "110px", height: "110px", cursor: "pointer" }}
                     />
                 </Link>
             </Box>
@@ -40,4 +40,4 @@ const HeaderHome = () => {
     );
 };
 
-export default HeaderHome;
+export default HeaderProfile;

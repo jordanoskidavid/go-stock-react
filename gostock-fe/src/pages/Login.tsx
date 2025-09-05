@@ -8,7 +8,7 @@ import {
     Box,
 } from "@mui/material";
 import CustomTextField from "../components/ui/customTextField.tsx";
-
+import {Helmet} from "react-helmet-async";
 const Login = () => {
     const { email, password, setEmail, setPassword, error, handleSubmit } =
         useLogin();
@@ -24,6 +24,10 @@ const Login = () => {
                 minHeight: "100dvh"
             }}
         >
+            <Helmet>
+            <title>Login | GoStock</title>
+            <meta name="description" content="Login with your credentials." />
+            </Helmet>
             <Paper
                 elevation={3}
                 sx={{
