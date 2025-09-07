@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Box, Button, TextField } from "@mui/material";
-import type {Category} from "../../../pages/Categories.tsx";
+import type {Category} from "../../../hooks/useCategories.ts";
 
 type Props = {
     category: Category;
@@ -21,20 +21,71 @@ const CategoryForm = ({ category, onSave, onCancel }: Props) => {
     };
 
     return (
-        <Box sx={{ display: "flex", flexDirection: "column", gap: 2, maxWidth: 400 }}>
-            <TextField
-                label="Name"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-            />
+        <Box
+            sx={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+            }}
+        >
+            <Box
+                sx={{
+                    display: "flex",
+                    flexDirection: "column",
+                    gap: 3,
+                    width: "100%",
+                    maxWidth: 400,
+                    p: 4,
+                    borderRadius: 3,
+                    backgroundColor: "#002A41",
+                    boxShadow: "0 4px 20px rgba(0,0,0,0.5)",
+                }}
+            >
+                <TextField
+                    label="Name"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    fullWidth
+                    variant="outlined"
+                    sx={{
+                        "& .MuiOutlinedInput-root": {
+                            "& fieldset": { borderColor: "#e3f2fd" },
+                            "&:hover fieldset": { borderColor: "#00AEEF" },
+                            "&.Mui-focused fieldset": { borderColor: "#00AEEF" },
+                        },
+                        "& .MuiInputBase-input": { color: "#e3f2fd" },
+                        "& .MuiInputLabel-root": { color: "#e3f2fd" },
+                        "& .MuiInputLabel-root.Mui-focused": { color: "#e3f2fd" },
+                    }}
+                />
 
-            <Box sx={{ display: "flex", gap: 2 }}>
-                <Button variant="contained" onClick={handleSubmit}>
-                    Save
-                </Button>
-                <Button variant="outlined" onClick={onCancel}>
-                    Cancel
-                </Button>
+                <Box sx={{ display: "flex", gap: 2, justifyContent: "flex-end" }}>
+                    <Button
+                        variant="contained"
+                        onClick={handleSubmit}
+                        sx={{
+                            backgroundColor: "#008DDA",
+                            "&:hover": { backgroundColor: "#00AEEF" },
+                            borderRadius: 2,
+                            px: 3,
+                        }}
+                    >
+                        Save
+                    </Button>
+                    <Button
+                        variant="outlined"
+                        onClick={onCancel}
+                        sx={{
+                            color: "#e3f2fd",
+                            borderColor: "#e3f2fd",
+                            "&:hover": { borderColor: "#00AEEF", color: "#00AEEF" },
+                            borderRadius: 2,
+                            px: 3,
+                        }}
+                    >
+                        Cancel
+                    </Button>
+                </Box>
             </Box>
         </Box>
     );

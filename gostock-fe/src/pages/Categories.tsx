@@ -54,12 +54,16 @@ const Categories = () => {
                     />
                 ) : (
                     <>
-                        <Button
-                            variant="contained"
-                            onClick={() => setEditingCategory({ id: 0, name: "" })}
-                        >
-                            Add Category
-                        </Button>
+                        <Box sx={{ display: "flex", justifyContent: "center"}}>
+                            <Button
+                                variant="contained"
+                                sx={{ width: "150px", fontWeight:"bold"}}
+                                onClick={() => setEditingCategory({ id: 0, name: "" })}
+                            >
+                                Add Category
+                            </Button>
+                        </Box>
+
                         <CategoriesList
                             categories={categories}
                             onEdit={(cat) => setEditingCategory(cat)}
