@@ -77,7 +77,6 @@ const Login = () => {
                     </Typography>
                 </Box>
 
-                {/* Right side = form */}
                 <Box sx={{ flex: 1, p: 4, mt: { xs: -3, md: 0 }, color:"#e3f2fd"}}>
                     <Typography variant="h4" align="center" gutterBottom>
                         Log In
