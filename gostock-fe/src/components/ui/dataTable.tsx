@@ -71,7 +71,7 @@ function DataTable<T extends { id: number }>({
                                             align={col.align || "left"}
                                             sx={{ color: "#e3f2fd", fontSize: "16px" }}
                                         >
-                                            {col.render ? col.render(row) : (row[col.id as keyof T] as any)}
+                                            {col.render ? col.render(row) : String(row[col.id as keyof T])}
                                         </TableCell>
                                     ))}
                                 </TableRow>

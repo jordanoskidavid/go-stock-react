@@ -5,6 +5,7 @@ import Login from "../pages/Login.tsx";
 import Register from "../pages/Register.tsx";
 import Users from "../pages/Users.tsx";
 import Categories from "../pages/Categories.tsx";
+import Products from "../pages/Products.tsx";
 
 export interface RouteType {
     path: string;
@@ -12,12 +13,13 @@ export interface RouteType {
 }
 
 export const routes: RouteType[] = [
-    { path: "/", element: Home },//dashboard
+    { path: "/", element: Home },
     { path: "/profile", element: UserProfile },
     { path: "/login", element: Login},
     { path: "/register", element: Register},
     { path: "/users", element: Users},
     { path: "/categories", element: Categories},
+    { path: "/products", element:Products}
 
 ];
 

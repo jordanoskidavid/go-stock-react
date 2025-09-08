@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Box, Button, TextField } from "@mui/material";
-import type {Category} from "../../../hooks/useCategories.ts";
+import type { Category } from "../../../hooks/useCategories.ts";
 
 type Props = {
     category: Category;
@@ -10,8 +10,14 @@ type Props = {
 
 const CategoryForm = ({ category, onSave, onCancel }: Props) => {
     const [name, setName] = useState(category.name);
+    const [error, setError] = useState("");
 
     const handleSubmit = () => {
+        if (!name.trim()) {
+            setError("Name is required");
+            return;
+        }
+
         const catData = { name };
         if (category.id) {
             onSave(catData, category.id);
@@ -20,14 +26,13 @@ const CategoryForm = ({ category, onSave, onCancel }: Props) => {
         }
     };
 
+    const handleChange = (value: string) => {
+        setName(value);
+        if (error) setError(""); // clear error on change
+    };
+
     return (
-        <Box
-            sx={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-            }}
-        >
+        <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
             <Box
                 sx={{
                     display: "flex",
@@ -44,9 +49,11 @@ const CategoryForm = ({ category, onSave, onCancel }: Props) => {
                 <TextField
                     label="Name"
                     value={name}
-                    onChange={(e) => setName(e.target.value)}
+                    onChange={(e) => handleChange(e.target.value)}
                     fullWidth
                     variant="outlined"
+                    error={!!error}
+                    helperText={error}
                     sx={{
                         "& .MuiOutlinedInput-root": {
                             "& fieldset": { borderColor: "#e3f2fd" },
