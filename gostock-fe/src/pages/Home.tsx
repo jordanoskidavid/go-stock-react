@@ -47,8 +47,10 @@ const Home = () => {
                     <Link to={'/products'} style={{ textDecoration: "none" }}>
                     <Card title="PRODUCTS" />
                     </Link>
+                    <Link to={'/orders'} style={{ textDecoration: "none" }}>
                     <Card title="ORDERS" />
-                </Box>
+                    </Link>
+                    </Box>
             </Box>
 
             <FooterHome />
