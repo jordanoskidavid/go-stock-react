@@ -41,7 +41,9 @@ const Home = () => {
                     <Link to={'/categories'} style={{ textDecoration: "none" }}>
                         <Card title="CATEGORIES" />
                     </Link>
+                    <Link to={'/users'} style={{ textDecoration: "none" }}>
                     <Card title="USERS" />
+                    </Link>
                     <Link to={'/products'} style={{ textDecoration: "none" }}>
                     <Card title="PRODUCTS" />
                     </Link>
