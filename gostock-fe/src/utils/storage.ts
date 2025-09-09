@@ -9,3 +9,7 @@ export function getToken() {
 export function clearToken() {
     localStorage.removeItem("token");
 }
+export const isLoggedIn = () => {
+    const token = getToken();
+    return !!token; // true if token exists
+};
