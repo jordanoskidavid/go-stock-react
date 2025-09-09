@@ -15,8 +15,8 @@ export const useUserProfile = () => {
         if (!token) return;
 
         const payload: JwtPayload | null = getUserFromToken(token);
-        if (!payload?.id) return;
-        getUserById(payload.id)
+        if (!payload?.user_id) return;
+        getUserById(payload.user_id)
             .then(res => setUser(res.data))
             .catch(err => console.error("Failed to fetch user:", err));
     }, []);

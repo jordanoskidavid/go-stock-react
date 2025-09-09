@@ -15,6 +15,8 @@ import SubmitButton from "../components/ui/submitButton.tsx";
 import CustomTextField from "../components/ui/customTextField.tsx";
 import { useUserProfile } from "../hooks/useUserProfile.ts";
 import { Helmet } from "react-helmet-async";
+import HeaderProfile from "../components/pages/profile/HeaderProfile.tsx";
+import FooterHome from "../components/pages/home/FooterHome.tsx";
 
 const UserProfile = () => {
     const { user, setUser, editMode, setEditMode, handleSave, handleLogout } =
@@ -52,6 +54,8 @@ const UserProfile = () => {
                     content="Manage your GoStock profile settings here."
                 />
             </Helmet>
+            <HeaderProfile />
+
 
             <Container
                 maxWidth={false}
@@ -223,6 +227,7 @@ const UserProfile = () => {
                     </Box>
                 </Paper>
             </Container>
+            <FooterHome />
         </Box>
     );
 };

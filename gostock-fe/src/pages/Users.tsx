@@ -3,7 +3,8 @@ import { Edit, Delete } from "@mui/icons-material";
 import FooterHome from "../components/pages/home/FooterHome";
 import UsersHeader from "../components/pages/users/UsersHeader";
 import DataTable from "../components/ui/dataTable";
-import { useUsers, type User } from "../hooks/useUsers";
+import { useUsers } from "../hooks/useUsers";
+import type {User} from "../types/user.ts";
 
 const Users = () => {
     const { users, editingUser, errors, setEditingUser, handleDelete, handleEdit, handleSave } = useUsers();
