@@ -28,6 +28,7 @@ const UserProfile = () => {
         name,
         setName,
         handleSave,
+        handleLogout
     } = useUserProfile();
 
     return (
@@ -194,6 +195,8 @@ const UserProfile = () => {
                                     </Button>
                                     <Button
                                         variant="outlined"
+                                        type={"submit"}
+                                        onClick={handleLogout}
                                         sx={{
                                             mt: 3,
                                             fontSize: 18,
