@@ -1,30 +1,50 @@
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
-import {clearToken} from "../utils/storage.ts";
+import {clearToken, getToken} from "../utils/storage.ts";
+import type {User} from "../types/user.ts";
+import {getUserFromToken, type JwtPayload} from "../utils/jwt.ts";
+import {getUserById, updateUser} from "../services/user.ts";
 
 export const useUserProfile = () => {
-    const [name, setName] = useState('David Jordanoski');
-    const [email, setEmail] = useState('david@email.com');
-    const [role, setRole] = useState('admin');
+    const [user, setUser] = useState<User | null>(null);
     const [editMode, setEditMode] = useState(false);
     const navigate = useNavigate();
-    const handleSave = () =>{
-        setEditMode(false);
-    }
+
+    useEffect(() => {
+        const token = getToken();
+        if (!token) return;
+
+        const payload: JwtPayload | null = getUserFromToken(token);
+        const userId = payload?.user_id;
+        if (!userId) return;
+
+        getUserById(userId)
+            .then(res => {
+                setUser(res.data);
+            })
+            .catch(err => console.error("Failed to fetch user:", err));
+    }, []);
+
+    const handleSave = () => {
+        if (!user) return;
+
+        updateUser(user.id, { name: user.name, email: user.email, role: user.role })
+            .then(res => setUser(res.data))
+            .catch(err => console.error("Failed to update user:", err))
+            .finally(() => setEditMode(false));
+    };
+
     const handleLogout = () => {
         clearToken();
         navigate("/login");
     };
+
     return {
-        name,
-        setEditMode,
-        setName,
-        setEmail,
-        setRole,
-        role,
+        user,
+        setUser,
         editMode,
-        email,
+        setEditMode,
         handleSave,
-        handleLogout
-    }
-}
+        handleLogout,
+    };
+};

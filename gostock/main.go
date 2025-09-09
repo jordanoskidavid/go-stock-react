@@ -2,18 +2,21 @@ package main
 
 import (
 	"fmt"
-	"github.com/jordanoskidavid/go-stock-react/database"
-	"github.com/jordanoskidavid/go-stock-react/routes"
 	"log"
 	"net/http"
+
+	"github.com/jordanoskidavid/go-stock-react/database"
+	"github.com/jordanoskidavid/go-stock-react/middleware"
+	"github.com/jordanoskidavid/go-stock-react/routes"
 )
 
 func main() {
 	database.ConnectDB()
 	routes.SetupRoutes()
+	handler := middleware.CORSMiddleware(http.DefaultServeMux)
 
 	fmt.Println("Server working on http://localhost:8080")
-	err := http.ListenAndServe(":8080", nil)
+	err := http.ListenAndServe(":8080", handler)
 	if err != nil {
 		log.Fatal("Failed to start server:", err)
 	}

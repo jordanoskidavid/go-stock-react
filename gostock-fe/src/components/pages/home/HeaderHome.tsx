@@ -1,7 +1,12 @@
 import { Link } from "react-router-dom";
 import { Typography, Box } from "@mui/material";
+import {useUserProfile} from "../../../hooks/useUserProfile.ts";
+
 
 const HeaderHome = () => {
+
+    const { user } = useUserProfile();
+
     return (
         <Box
             sx={{
@@ -23,7 +28,7 @@ const HeaderHome = () => {
 
             <Box sx={{ flex: 1, textAlign: "center" }}>
                 <Typography variant="h4" sx={{ color:"#e3f2fd"}}>
-                    Hello David!
+                    Hello {user?.name}!
                 </Typography>
             </Box>
 

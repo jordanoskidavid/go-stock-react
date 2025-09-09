@@ -2,10 +2,9 @@ import axios from "axios";
 import { getToken } from "../utils/storage";
 
 export const api = axios.create({
-    baseURL: "http://localhost:8080/api", // your Go backend base URL
+    baseURL: "http://localhost:8080/api",
 });
 
-// ✅ Attach token automatically
 api.interceptors.request.use((config) => {
     const token = getToken();
     if (token) {

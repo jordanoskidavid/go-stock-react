@@ -1,11 +1,5 @@
 import { useState } from "react";
-
-export type User = {
-    id: number;
-    name: string;
-    email: string;
-    role: "admin" | "manager" | "employee";
-};
+import type {User} from "../types/user.ts";
 
 export const useUsers = () => {
     const [users, setUsers] = useState<User[]>([

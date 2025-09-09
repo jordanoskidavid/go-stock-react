@@ -9,27 +9,34 @@ import {
     InputLabel,
     Paper,
     Container,
+    CircularProgress,
 } from "@mui/material";
 import SubmitButton from "../components/ui/submitButton.tsx";
 import CustomTextField from "../components/ui/customTextField.tsx";
 import { useUserProfile } from "../hooks/useUserProfile.ts";
+import { Helmet } from "react-helmet-async";
 import HeaderProfile from "../components/pages/profile/HeaderProfile.tsx";
 import FooterHome from "../components/pages/home/FooterHome.tsx";
-import { Helmet } from "react-helmet-async";
 
 const UserProfile = () => {
-    const {
-        editMode,
-        setEditMode,
-        email,
-        role,
-        setRole,
-        setEmail,
-        name,
-        setName,
-        handleSave,
-        handleLogout
-    } = useUserProfile();
+    const { user, setUser, editMode, setEditMode, handleSave, handleLogout } =
+        useUserProfile();
+
+    if (!user) {
+        return (
+            <Box
+                sx={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    minHeight: "100dvh",
+                    backgroundColor: "#001E2B",
+                }}
+            >
+                <CircularProgress color="primary" />
+            </Box>
+        );
+    }
 
     return (
         <Box
@@ -42,9 +49,13 @@ const UserProfile = () => {
         >
             <Helmet>
                 <title>Your Profile | GoStock</title>
-                <meta name="description" content="Manage your GoStock profile settings here." />
+                <meta
+                    name="description"
+                    content="Manage your GoStock profile settings here."
+                />
             </Helmet>
             <HeaderProfile />
+
 
             <Container
                 maxWidth={false}
@@ -69,6 +80,7 @@ const UserProfile = () => {
                         overflow: "hidden",
                     }}
                 >
+                    {/* Avatar and basic info */}
                     <Box
                         sx={{
                             flex: 1,
@@ -88,15 +100,16 @@ const UserProfile = () => {
                         {!editMode && (
                             <>
                                 <Typography variant="h5" fontWeight="bold" color="#e3f2fd">
-                                    {name}
+                                    {user.name}
                                 </Typography>
                                 <Typography variant="h5" color="#e3f2fd">
-                                    {role}
+                                    {user.role}
                                 </Typography>
                             </>
                         )}
                     </Box>
 
+                    {/* Profile Form */}
                     <Box
                         sx={{
                             flex: 1,
@@ -111,13 +124,13 @@ const UserProfile = () => {
                             <>
                                 <CustomTextField
                                     label="Name"
-                                    value={name}
-                                    onChange={(e) => setName(e.target.value)}
+                                    value={user.name}
+                                    onChange={(e) => setUser({ ...user, name: e.target.value })}
                                 />
                                 <CustomTextField
                                     label="Email"
-                                    value={email}
-                                    onChange={(e) => setEmail(e.target.value)}
+                                    value={user.email}
+                                    onChange={(e) => setUser({ ...user, email: e.target.value })}
                                 />
                                 <FormControl fullWidth margin="normal">
                                     <InputLabel
@@ -135,9 +148,11 @@ const UserProfile = () => {
                                             "&.Mui-focused .MuiOutlinedInput-notchedOutline": { borderColor: "#008DDA" },
                                             "& .MuiSelect-select": { color: "#e3f2fd" },
                                         }}
-                                        value={role}
+                                        value={user.role}
                                         label="Role"
-                                        onChange={(e) => setRole(e.target.value)}
+                                        onChange={(e) =>
+                                            setUser({ ...user, role: e.target.value as "admin" | "manager" | "employee" })
+                                        }
                                     >
                                         <MenuItem value="manager">Manager</MenuItem>
                                         <MenuItem value="employee">Employee</MenuItem>
@@ -151,7 +166,7 @@ const UserProfile = () => {
                                     Email
                                 </Typography>
                                 <Typography variant="h5" color="#e3f2fd">
-                                    {email}
+                                    {user.email}
                                 </Typography>
                             </>
                         )}
@@ -195,7 +210,6 @@ const UserProfile = () => {
                                     </Button>
                                     <Button
                                         variant="outlined"
-                                        type={"submit"}
                                         onClick={handleLogout}
                                         sx={{
                                             mt: 3,
@@ -213,7 +227,6 @@ const UserProfile = () => {
                     </Box>
                 </Paper>
             </Container>
-
             <FooterHome />
         </Box>
     );
