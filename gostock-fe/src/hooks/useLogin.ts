@@ -1,22 +1,26 @@
 import React, {useState } from "react";
+import { login } from "../services/auth";
+import {useNavigate} from "react-router-dom";
 export const useLogin = () => {
     const [email, setEmail] = useState<string>('');
     const [password, setPassword] = useState<string>('');
     const [error, setError] = useState<string | null>(null);
-
-    const handleSubmit = (e: React.FormEvent) => {
+    const navigate = useNavigate();
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
         if (!email || !password) {
             setError("Email and password are required!");
             return;
         }
-        if (email === 'test@example.com' && password === '123456') {
+        try {
             setError(null);
-            alert('Logged in successfully!');
-        }
-        else {
-            setError('Invalid email or password!');
+
+            await login(email, password);
+
+            navigate("/");
+        } catch {
+            setError("Invalid email or password!");
         }
     }
     return {
