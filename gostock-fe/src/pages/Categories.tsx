@@ -4,6 +4,7 @@ import CategoriesList from "../components/pages/categories/CategoriesList.tsx";
 import FooterHome from "../components/pages/home/FooterHome.tsx";
 import HeaderCategory from "../components/pages/categories/HeaderCategory.tsx";
 import { useCategories } from "../hooks/useCategories.ts";
+import {useUserProfile} from "../hooks/useUserProfile.ts";
 
 const Categories = () => {
     const {
@@ -22,7 +23,7 @@ const Categories = () => {
         { id: 7, name: "Clothing" },
         { id: 8, name: "Clothing" },
     ]);
-
+    const{ user } = useUserProfile();
     return (
         <Box
             sx={{
@@ -53,7 +54,7 @@ const Categories = () => {
                         onCancel={() => setEditingCategory(null)}
                     />
                 ) : (
-                    <>
+                    user?.role === "admin" ? (<>
                         <Box sx={{ display: "flex", justifyContent: "center"}}>
                             <Button
                                 variant="contained"
@@ -69,7 +70,16 @@ const Categories = () => {
                             onEdit={(cat) => setEditingCategory(cat)}
                             onDelete={handleDelete}
                         />
-                    </>
+                    </>) : (
+                        <>
+                            <CategoriesList
+                                categories={categories}
+                                onEdit={(cat) => setEditingCategory(cat)}
+                                onDelete={handleDelete}
+                            />
+                        </>
+                    )
+
                 )}
             </Box>
 

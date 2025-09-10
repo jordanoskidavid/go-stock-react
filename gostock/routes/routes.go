@@ -28,8 +28,13 @@ func SetupRoutes() {
 	http.HandleFunc("/api/category/get-all-categories", middleware.AuthMiddleware(
 		middleware.RoleMiddleware(handlers.GetAllCategories, "admin", "manager", "employee"),
 	))
+	//get category by id
 	http.HandleFunc("/api/category/get-category/", middleware.AuthMiddleware(
 		middleware.RoleMiddleware(handlers.GetCategoryByID, "admin", "manager", "employee"),
+	))
+	//get user by id route
+	http.HandleFunc("/api/get-user-by-id/", middleware.AuthMiddleware(
+		middleware.RoleMiddleware(handlers.GetUserByID, "admin", "employee", "manager"),
 	))
 
 	//routes for manager and admin
@@ -69,10 +74,6 @@ func SetupRoutes() {
 	//get all users route
 	http.HandleFunc("/api/get-all-users", middleware.AuthMiddleware(
 		middleware.RoleMiddleware(handlers.GetAllUsers, "admin"),
-	))
-	//get user by id route
-	http.HandleFunc("/api/get-user-by-id/", middleware.AuthMiddleware(
-		middleware.RoleMiddleware(handlers.GetUserByID, "admin"),
 	))
 	//update user by id route
 	http.HandleFunc("/api/update-user-by-id/", middleware.AuthMiddleware(

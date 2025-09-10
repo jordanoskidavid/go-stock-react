@@ -126,14 +126,13 @@ const Register = () => {
                                         borderColor: "#008DDA",
                                     },
 
-                                    // 🔹 Text color inside select
                                     "& .MuiSelect-select": {
                                         color: "#e3f2fd",
                                     },
                                     }}
                                 value={role}
                                 label="Role"
-                                onChange={(e) => setRole(e.target.value)}
+                                onChange={(e) => setRole(e.target.value as "employee" | "admin" | "manager")}
                             >
                                 <MenuItem value="manager">Manager</MenuItem>
                                 <MenuItem value="employee">Employee</MenuItem>

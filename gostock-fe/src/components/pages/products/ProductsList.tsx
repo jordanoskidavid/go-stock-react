@@ -2,6 +2,7 @@ import { IconButton } from "@mui/material";
 import { Edit, Delete } from "@mui/icons-material";
 import DataTable from "../../ui/dataTable";
 import type { Product } from "../../../hooks/useProducts";
+import {useUserProfile} from "../../../hooks/useUserProfile.ts";
 
 const ProductsList = ({ products, onEdit, onDelete }: {
     products: Product[];
@@ -14,6 +15,7 @@ const ProductsList = ({ products, onEdit, onDelete }: {
         2: "Clothing",
         3: "Food",
     };
+    const {user} = useUserProfile();
 
     return (
         <DataTable
@@ -34,14 +36,40 @@ const ProductsList = ({ products, onEdit, onDelete }: {
                     label: "Actions",
                     align: "right",
                     render: (p: Product) => (
-                        <>
+                        user?.role === "admin" || user?.role === "manager" ? (<>
                             <IconButton onClick={() => onEdit(p)}>
                                 <Edit sx={{ color: "#00AEEF" }} />
                             </IconButton>
                             <IconButton onClick={() => onDelete(p.id)}>
                                 <Delete sx={{ color: "red" }} />
                             </IconButton>
-                        </>
+                        </>):(
+                            <>
+                                <IconButton
+                                    disabled
+                                    sx={{
+                                        "&.Mui-disabled": {
+                                            cursor: "not-allowed !important",
+                                            pointerEvents: "auto",
+                                        },
+                                    }}
+                                >
+                                    <Edit sx={{ color: "grey" }} />
+                                </IconButton>
+                                <IconButton
+                                    disabled
+                                    sx={{
+                                        "&.Mui-disabled": {
+                                            cursor: "not-allowed !important",
+                                            pointerEvents: "auto",
+                                        },
+                                    }}
+                                >
+                                    <Delete sx={{ color: "grey", cursor: "not-allowed" }} />
+                                </IconButton>
+                            </>
+                        )
+
                     ),
                 },
             ]}
