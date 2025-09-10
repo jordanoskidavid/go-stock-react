@@ -1,9 +1,8 @@
-// src/components/pages/categories/CategoriesList.tsx
 import { IconButton } from "@mui/material";
 import { Edit, Delete } from "@mui/icons-material";
-import type { Category } from "../../../hooks/useCategories.ts";
 import DataTable from "../../ui/dataTable.tsx";
 import {useUserProfile} from "../../../hooks/useUserProfile.ts";
+import type {Category} from "../../../types/categoriesGet.ts";
 
 type Props = {
     categories: Category[];

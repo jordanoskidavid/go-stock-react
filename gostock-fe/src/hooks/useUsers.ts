@@ -1,15 +1,26 @@
-import { useState } from "react";
+import {useEffect, useState} from "react";
 import type {User} from "../types/user.ts";
+import {getUsers} from "../services/user.ts";
 
 export const useUsers = () => {
-    const [users, setUsers] = useState<User[]>([
-        { id: 1, name: "John Doe", email: "john@example.com", role: "admin" },
-        { id: 2, name: "Jane Smith", email: "jane@example.com", role: "manager" },
-        { id: 3, name: "David Johnson", email: "david@example.com", role: "employee" },
-    ]);
+    const [users, setUsers] = useState<User[]>([]);
 
     const [editingUser, setEditingUser] = useState<User | null>(null);
     const [errors, setErrors] = useState<{ name?: string; email?: string; role?: string }>({});
+
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const data = await getUsers();
+                setUsers(data);
+            } catch (err) {
+                console.error("Failed to fetch users:", err);
+            }
+        };
+        void fetchData();
+    }, []);
+
 
     const handleDelete = (id: number) => {
         setUsers((prev) => prev.filter((u) => u.id !== id));

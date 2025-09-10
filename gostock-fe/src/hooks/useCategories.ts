@@ -1,13 +1,24 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { getCategories } from "../services/categories";
+import type {Category} from "../types/categoriesGet.ts";
 
-export type Category = {
-    id: number;
-    name: string;
-};
 
-export const useCategories = (initialCategories: Category[] = []) => {
-    const [categories, setCategories] = useState<Category[]>(initialCategories);
+
+export const useCategories = () => {
+    const [categories, setCategories] = useState<Category[]>([]);
     const [editingCategory, setEditingCategory] = useState<Category | null>(null);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const data = await getCategories();
+                setCategories(data);
+            } catch (err) {
+                console.error("Failed to fetch categories:", err);
+            }
+        };
+        void fetchData();
+    }, []);
 
     const handleSave = (category: Omit<Category, "id">, id?: number) => {
         if (id) {

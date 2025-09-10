@@ -13,16 +13,7 @@ const Categories = () => {
         setEditingCategory,
         handleSave,
         handleDelete,
-    } = useCategories([
-        { id: 1, name: "Electronics" },
-        { id: 2, name: "Clothing" },
-        { id: 3, name: "Clothing" },
-        { id: 4, name: "Clothing" },
-        { id: 5, name: "Clothing" },
-        { id: 6, name: "Clothing" },
-        { id: 7, name: "Clothing" },
-        { id: 8, name: "Clothing" },
-    ]);
+    } = useCategories();
     const{ user } = useUserProfile();
     return (
         <Box
