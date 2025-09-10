@@ -1,13 +1,16 @@
 import { Link } from "react-router-dom";
-import { Typography, Box } from "@mui/material";
+import {Typography, Box, Button} from "@mui/material";
+import {useUserProfile} from "../../../hooks/useUserProfile.ts";
 
 const HeaderProfile = () => {
+    const {user} = useUserProfile();
     return (
         <Box
             sx={{
                 display: "flex",
                 alignItems: "center",
                 px: 2,
+                py:2,
                 backgroundColor: "#002A41",
             }}
         >
@@ -28,13 +31,28 @@ const HeaderProfile = () => {
             </Box>
 
             <Box sx={{ flexShrink: 0 }}>
-                <Link to="/">
-                    <img
-                        src="/logo.png"
-                        alt="logo"
-                        style={{ width: "110px", height: "110px", cursor: "pointer" }}
-                    />
-                </Link>
+                {user?.role === 'admin' ? (
+                <Link to="/register">
+                    <Button
+                        variant="contained"
+                        sx={{
+                            backgroundColor: "#008DDA",
+                            "&:hover": { backgroundColor: "#00AEEF" },
+                            borderRadius: 2,
+                            px: 3,
+                        }}
+                    >
+                        Register
+                    </Button>                </Link>
+                ):(
+                    <Link to="/">
+                        <img
+                            src="/logo.png"
+                            alt="logo"
+                            style={{ width: "110px", height: "110px", cursor: "pointer" }}
+                        />
+                    </Link>
+                )}
             </Box>
         </Box>
     );

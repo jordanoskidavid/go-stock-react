@@ -80,7 +80,6 @@ const UserProfile = () => {
                         overflow: "hidden",
                     }}
                 >
-                    {/* Avatar and basic info */}
                     <Box
                         sx={{
                             flex: 1,
@@ -194,7 +193,7 @@ const UserProfile = () => {
                                     </Button>
                                 </>
                             ) : (
-                                <>
+                                user.role ==='admin' ?(<>
                                     <Button
                                         variant="contained"
                                         onClick={() => setEditMode(true)}
@@ -221,8 +220,24 @@ const UserProfile = () => {
                                     >
                                         Logout
                                     </Button>
-                                </>
-                            )}
+                                </>) : (
+                                    <>
+                                        <Button
+                                            variant="outlined"
+                                            onClick={handleLogout}
+                                            sx={{
+                                                mt:2,
+                                                fontSize: 18,
+                                                borderColor: "#008DDA",
+                                                color: "#e3f2fd",
+                                                "&:hover": { borderColor: "#008DDA", color: "#008DDA" },
+                                            }}
+                                        >
+                                            Logout
+                                        </Button>
+                                    </>
+
+                                ))}
                         </Box>
                     </Box>
                 </Paper>

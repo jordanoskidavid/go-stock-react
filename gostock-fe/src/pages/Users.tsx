@@ -5,15 +5,16 @@ import UsersHeader from "../components/pages/users/UsersHeader";
 import DataTable from "../components/ui/dataTable";
 import { useUsers } from "../hooks/useUsers";
 import type {User} from "../types/user.ts";
+import {useUserProfile} from "../hooks/useUserProfile.ts";
 
 const Users = () => {
     const { users, editingUser, errors, setEditingUser, handleDelete, handleEdit, handleSave } = useUsers();
-
+    const { user } = useUserProfile();
     return (
         <Box sx={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}>
             <UsersHeader />
 
-            <Box sx={{ flex: 1, p: 3 }}>
+            <Box sx={{ flex: 1, p: 9 }}>
                 <DataTable
                     data={users}
                     columns={[
@@ -26,14 +27,40 @@ const Users = () => {
                             label: "Actions",
                             align: "right",
                             render: (u: User) => (
-                                <>
+                                user?.role === "admin" || user?.role === "manager" ? (<>
                                     <IconButton onClick={() => handleEdit(u)}>
                                         <Edit sx={{ color: "#00AEEF" }} />
                                     </IconButton>
                                     <IconButton onClick={() => handleDelete(u.id)}>
                                         <Delete sx={{ color: "red" }} />
                                     </IconButton>
-                                </>
+                                </>): (
+                                    <>
+                                        <IconButton
+                                            disabled
+                                            sx={{
+                                                "&.Mui-disabled": {
+                                                    cursor: "not-allowed !important",
+                                                    pointerEvents: "auto",
+                                                },
+                                            }}
+                                        >
+                                            <Edit sx={{ color: "grey" }} />
+                                        </IconButton>
+                                        <IconButton
+                                            disabled
+                                            sx={{
+                                                "&.Mui-disabled": {
+                                                    cursor: "not-allowed !important",
+                                                    pointerEvents: "auto",
+                                                },
+                                            }}
+                                        >
+                                            <Delete sx={{ color: "grey", cursor: "not-allowed" }} />
+                                        </IconButton>
+                                    </>
+                                )
+
                             ),
                         },
                     ]}
@@ -46,8 +73,8 @@ const Users = () => {
                 slotProps={{
                     paper: {
                         sx: {
-                            backgroundColor: "transparent", // transparent background
-                            boxShadow: "none", // remove dialog shadow
+                            backgroundColor: "transparent",
+                            boxShadow: "none",
                         },
                     },
                 }}
