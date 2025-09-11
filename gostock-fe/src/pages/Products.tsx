@@ -11,6 +11,7 @@ const Products = () => {
         editingProduct,
         setEditingProduct,
         handleDelete,
+        handleSave
     } = useProducts();
 
     return (
@@ -25,19 +26,30 @@ const Products = () => {
                 {editingProduct ? (
                     <ProductForm
                         product={editingProduct}
-                        onSave={() => setEditingProduct(null)}
+                        onSave={handleSave}
                         onCancel={() => setEditingProduct(null)}
                     />
                 ) : (
                     <>
-                        <Box sx={{ display: "flex", justifyContent: "center" }}>
-                            <Button
-                                variant="contained"
-                                sx={{ width: "150px", fontWeight:"bold"}}
-                            >
-                                Add Product
-                            </Button>
-                        </Box>
+                    <Box sx={{ display: "flex", justifyContent: "center" }}>
+                        <Button
+                            variant="contained"
+                            sx={{ width: "150px", fontWeight: "bold" }}
+                            onClick={() =>
+                                setEditingProduct({
+                                    id: 0,
+                                    name: "",
+                                    description: "",
+                                    price: 0,
+                                    stock: 0,
+                                    category_id: 0,
+                                    category: "",
+                                })
+                            }
+                        >
+                            Add Product
+                        </Button>
+                    </Box>
 
                         <ProductsList
                             products={products}

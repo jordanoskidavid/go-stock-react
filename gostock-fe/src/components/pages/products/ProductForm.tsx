@@ -1,7 +1,7 @@
 import { Box, Button, TextField, MenuItem } from "@mui/material";
 import { useState } from "react";
-import type {Product} from "../../../types/productsGet.ts";
-
+import type { Product } from "../../../types/productsGet.ts";
+import { useCategories } from "../../../hooks/useCategories.ts";
 
 type Props = {
     product: Product;
@@ -11,12 +11,23 @@ type Props = {
 
 const ProductForm = ({ product, onSave, onCancel }: Props) => {
     const [form, setForm] = useState(product);
-
     const [errors, setErrors] = useState<Partial<Record<keyof Product, string>>>({});
+
+    const { categories } = useCategories();
 
     const handleChange = <K extends keyof Product>(key: K, value: Product[K]) => {
         setForm({ ...form, [key]: value });
         setErrors((prev) => ({ ...prev, [key]: "" })); // clear error on change
+    };
+
+    const handleCategoryChange = (id: number) => {
+        const category = categories.find((c) => c.id === id);
+        setForm({
+            ...form,
+            category_id: id,
+            category: category ? category.name : "",
+        });
+        setErrors((prev) => ({ ...prev, category_id: "" }));
     };
 
     const validate = () => {
@@ -38,7 +49,19 @@ const ProductForm = ({ product, onSave, onCancel }: Props) => {
 
     return (
         <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center"}}>
-            <Box sx={{ display: "flex", flexDirection: "column", gap: 3, width: "100%", maxWidth: 500, p: 4, borderRadius: 3, backgroundColor: "#002A41", boxShadow: "0 4px 20px rgba(0,0,0,0.5)" }}>
+            <Box
+                sx={{
+                    display: "flex",
+                    flexDirection: "column",
+                    gap: 3,
+                    width: "100%",
+                    maxWidth: 500,
+                    p: 4,
+                    borderRadius: 3,
+                    backgroundColor: "#002A41",
+                    boxShadow: "0 4px 20px rgba(0,0,0,0.5)"
+                }}
+            >
                 <TextField
                     label="Name"
                     value={form.name}
@@ -80,20 +103,43 @@ const ProductForm = ({ product, onSave, onCancel }: Props) => {
                 <TextField
                     select
                     label="Category"
-                    value={form.category_id}
-                    onChange={(e) => handleChange("category_id", Number(e.target.value))}
+                    value={form.category_id || ""}
+                    onChange={(e) => handleCategoryChange(Number(e.target.value))}
                     error={!!errors.category_id}
                     helperText={errors.category_id}
                     sx={{ "& .MuiInputBase-input": { color: "#e3f2fd" }, "& .MuiInputLabel-root": { color: "#e3f2fd" } }}
                 >
-                    <MenuItem value={form.category_id}>{form.category}</MenuItem>
+                    {categories.map((cat) => (
+                        <MenuItem key={cat.id} value={cat.id}>
+                            {cat.name}
+                        </MenuItem>
+                    ))}
                 </TextField>
 
                 <Box sx={{ display: "flex", gap: 2, justifyContent: "flex-end" }}>
-                    <Button variant="contained" onClick={handleSubmit} sx={{ backgroundColor: "#008DDA", "&:hover": { backgroundColor: "#00AEEF" }, borderRadius: 2, px: 3 }}>
+                    <Button
+                        variant="contained"
+                        onClick={handleSubmit}
+                        sx={{
+                            backgroundColor: "#008DDA",
+                            "&:hover": { backgroundColor: "#00AEEF" },
+                            borderRadius: 2,
+                            px: 3
+                        }}
+                    >
                         Save
                     </Button>
-                    <Button variant="outlined" onClick={onCancel} sx={{ color: "#e3f2fd", borderColor: "#e3f2fd", "&:hover": { borderColor: "#00AEEF", color: "#00AEEF" }, borderRadius: 2, px: 3 }}>
+                    <Button
+                        variant="outlined"
+                        onClick={onCancel}
+                        sx={{
+                            color: "#e3f2fd",
+                            borderColor: "#e3f2fd",
+                            "&:hover": { borderColor: "#00AEEF", color: "#00AEEF" },
+                            borderRadius: 2,
+                            px: 3
+                        }}
+                    >
                         Cancel
                     </Button>
                 </Box>

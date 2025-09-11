@@ -16,6 +16,10 @@ func SetupRoutes() {
 	http.HandleFunc("/api/employee/data", middleware.AuthMiddleware(
 		middleware.RoleMiddleware(handlers.EmployeeData, "employee", "manager", "admin"),
 	))
+	//get all users route
+	http.HandleFunc("/api/get-all-users", middleware.AuthMiddleware(
+		middleware.RoleMiddleware(handlers.GetAllUsers, "admin", "manager", "employee"),
+	))
 	// get all products
 	http.HandleFunc("/api/products/getAll", middleware.AuthMiddleware(
 		middleware.RoleMiddleware(handlers.GetAllProducts, "admin", "manager", "employee"),
@@ -44,7 +48,7 @@ func SetupRoutes() {
 	))
 	//update product
 	http.HandleFunc("/api/products/update-product/", middleware.AuthMiddleware(
-		middleware.RoleMiddleware(handlers.UpdateProductByID, "admin", "manager"),
+		middleware.RoleMiddleware(handlers.UpdateProductByID, "admin", "manager", "employee"),
 	))
 	//delete product
 	http.HandleFunc("/api/products/delete-product/", middleware.AuthMiddleware(
@@ -71,10 +75,7 @@ func SetupRoutes() {
 	http.HandleFunc("/api/admin/dashboard", middleware.AuthMiddleware(
 		middleware.RoleMiddleware(handlers.AdminDashboard, "admin"),
 	))
-	//get all users route
-	http.HandleFunc("/api/get-all-users", middleware.AuthMiddleware(
-		middleware.RoleMiddleware(handlers.GetAllUsers, "admin"),
-	))
+
 	//update user by id route
 	http.HandleFunc("/api/update-user-by-id/", middleware.AuthMiddleware(
 		middleware.RoleMiddleware(handlers.UpdateUserByID, "admin"),

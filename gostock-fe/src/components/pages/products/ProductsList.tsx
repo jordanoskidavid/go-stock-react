@@ -38,17 +38,10 @@ const ProductsList = ({ products, onEdit, onDelete }: {
                                 </>
                             ) : (
                                 <>
-                                    <IconButton
-                                        disabled
-                                        sx={{
-                                            "&.Mui-disabled": {
-                                                cursor: "not-allowed !important",
-                                                pointerEvents: "auto",
-                                            },
-                                        }}
-                                    >
-                                        <Edit sx={{ color: "grey" }} />
-                                    </IconButton>
+                                <IconButton onClick={() => onEdit(p)}>
+                                    <Edit sx={{ color: "#00AEEF" }} />
+                                </IconButton>
+
                                     <IconButton
                                         disabled
                                         sx={{
