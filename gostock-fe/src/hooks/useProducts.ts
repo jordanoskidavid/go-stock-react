@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import { getProducts } from "../services/products.ts";
-import type {Product} from "../types/productsGet.ts";
+import { getProducts, addProduct, updateProduct, deleteProduct } from "../services/products.ts";
+import type { Product } from "../types/productsGet.ts";
 
 export function useProducts() {
     const [products, setProducts] = useState<Product[]>([]);
@@ -23,18 +23,45 @@ export function useProducts() {
         void fetchData();
     }, []);
 
-    const handleSave = (prod: Product) => {
-        if (prod.id === 0) {
-            const newProd = { ...prod, id: products.length + 1 };
-            setProducts([...products, newProd]);
-        } else {
-            setProducts(products.map((p) => (p.id === prod.id ? prod : p)));
+    const handleSave = async (prod: Product) => {
+        try {
+            if (prod.id === 0) {
+                // ADD product to backend
+                const response = await addProduct({
+                    name: prod.name,
+                    description: prod.description,
+                    price: prod.price,
+                    stock: prod.stock,
+                    category_id: prod.category_id,
+                });
+                // add returned product to local state
+                setProducts((prev) => [...prev, response.data]);
+            } else {
+                // UPDATE product
+                const response = await updateProduct(prod.id, {
+                    name: prod.name,
+                    description: prod.description,
+                    price: prod.price,
+                    stock: prod.stock,
+                    category_id: prod.category_id,
+                });
+                setProducts((prev) =>
+                    prev.map((p) => (p.id === prod.id ? response.data : p))
+                );
+            }
+        } catch (err) {
+            console.error("Failed to save product:", err);
+        } finally {
+            setEditingProduct(null);
         }
-        setEditingProduct(null);
     };
-
-    const handleDelete = (id: number) => {
-        setProducts(products.filter((p) => p.id !== id));
+    const handleDelete = async (id: number) => {
+        try {
+            await deleteProduct(id);
+            setProducts(products.filter((p) => p.id !== id));
+        } catch (err) {
+            console.error("Failed to delete product:", err);
+        }
     };
 
     return {
