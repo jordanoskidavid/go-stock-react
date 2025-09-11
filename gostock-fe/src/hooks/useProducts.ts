@@ -8,14 +8,25 @@ export function useProducts() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
 
+    // Snackbar state
+    const [snackbarOpen, setSnackbarOpen] = useState(false);
+    const [snackbarMessage, setSnackbarMessage] = useState("");
+    const [snackbarSeverity, setSnackbarSeverity] = useState<"success" | "error">("success");
+
+    const showSnackbar = (message: string, severity: "success" | "error") => {
+        setSnackbarMessage(message);
+        setSnackbarSeverity(severity);
+        setSnackbarOpen(true);
+    };
+
     useEffect(() => {
         const fetchData = async () => {
             try {
                 const data = await getProducts();
                 setProducts(data);
-            } catch (err) {
-                console.error("Failed to fetch products:", err);
+            } catch {
                 setError("Could not load products");
+                showSnackbar("Failed to fetch products", "error");
             } finally {
                 setLoading(false);
             }
@@ -26,7 +37,7 @@ export function useProducts() {
     const handleSave = async (prod: Product) => {
         try {
             if (prod.id === 0) {
-                // ADD product to backend
+                // ADD product
                 const response = await addProduct({
                     name: prod.name,
                     description: prod.description,
@@ -34,8 +45,8 @@ export function useProducts() {
                     stock: prod.stock,
                     category_id: prod.category_id,
                 });
-                // add returned product to local state
                 setProducts((prev) => [...prev, response.data]);
+                showSnackbar("Product added successfully", "success");
             } else {
                 // UPDATE product
                 const response = await updateProduct(prod.id, {
@@ -48,19 +59,22 @@ export function useProducts() {
                 setProducts((prev) =>
                     prev.map((p) => (p.id === prod.id ? response.data : p))
                 );
+                showSnackbar("Product updated successfully", "success");
             }
-        } catch (err) {
-            console.error("Failed to save product:", err);
+        } catch {
+            showSnackbar("Failed to save product", "error");
         } finally {
             setEditingProduct(null);
         }
     };
+
     const handleDelete = async (id: number) => {
         try {
             await deleteProduct(id);
             setProducts(products.filter((p) => p.id !== id));
-        } catch (err) {
-            console.error("Failed to delete product:", err);
+            showSnackbar("Product deleted successfully", "success");
+        } catch {
+            showSnackbar("Failed to delete product", "error");
         }
     };
 
@@ -72,5 +86,9 @@ export function useProducts() {
         handleDelete,
         loading,
         error,
+        snackbarOpen,
+        setSnackbarOpen,
+        snackbarMessage,
+        snackbarSeverity,
     };
 }

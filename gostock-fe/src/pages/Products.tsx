@@ -1,4 +1,4 @@
-import { Box, Button, Typography } from "@mui/material";
+import {Alert, Box, Button, Snackbar, Typography} from "@mui/material";
 import ProductForm from "../components/pages/products/ProductForm";
 import ProductsList from "../components/pages/products/ProductsList";
 import FooterHome from "../components/pages/home/FooterHome";
@@ -10,8 +10,12 @@ const Products = () => {
         products,
         editingProduct,
         setEditingProduct,
+        handleSave,
         handleDelete,
-        handleSave
+        snackbarOpen,
+        setSnackbarOpen,
+        snackbarMessage,
+        snackbarSeverity,
     } = useProducts();
 
     return (
@@ -59,7 +63,20 @@ const Products = () => {
                     </>
                 )}
             </Box>
-
+            <Snackbar
+                open={snackbarOpen}
+                autoHideDuration={3000}
+                onClose={() => setSnackbarOpen(false)}
+                anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+            >
+                <Alert
+                    onClose={() => setSnackbarOpen(false)}
+                    severity={snackbarSeverity}
+                    sx={{ width: "100%", fontWeight: "bold", boxShadow: "0px 3px 10px rgba(0,0,0,0.3)",
+                    }}                >
+                    {snackbarMessage}
+                </Alert>
+            </Snackbar>
             <FooterHome />
         </Box>
     );

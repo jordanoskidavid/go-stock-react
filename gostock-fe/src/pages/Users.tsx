@@ -6,9 +6,20 @@ import DataTable from "../components/ui/dataTable";
 import { useUsers } from "../hooks/useUsers";
 import type {User} from "../types/user.ts";
 import {useUserProfile} from "../hooks/useUserProfile.ts";
+import {Alert, Snackbar} from "@mui/material";
 
 const Users = () => {
-    const { users, editingUser, errors, setEditingUser, handleDelete, handleEdit, handleSave } = useUsers();
+    const {  users,
+        editingUser,
+        errors,
+        setEditingUser,
+        handleDelete,
+        handleEdit,
+        handleSave,
+        snackbarOpen,
+        setSnackbarOpen,
+        snackbarMessage,
+        snackbarSeverity, } = useUsers();
     const { user } = useUserProfile();
     return (
         <Box sx={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}>
@@ -201,7 +212,20 @@ const Users = () => {
                     </Box>
                 </Box>
             </Dialog>
-
+            <Snackbar
+                open={snackbarOpen}
+                autoHideDuration={3000}
+                onClose={() => setSnackbarOpen(false)}
+                anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+            >
+                <Alert
+                    onClose={() => setSnackbarOpen(false)}
+                    severity={snackbarSeverity}
+                    sx={{ width: "100%", fontWeight: "bold", boxShadow: "0px 3px 10px rgba(0,0,0,0.3)",
+                    }}                >
+                    {snackbarMessage}
+                </Alert>
+            </Snackbar>
             <FooterHome />
         </Box>
     );

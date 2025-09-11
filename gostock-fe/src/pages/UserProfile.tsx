@@ -17,9 +17,19 @@ import { useUserProfile } from "../hooks/useUserProfile.ts";
 import { Helmet } from "react-helmet-async";
 import HeaderProfile from "../components/pages/profile/HeaderProfile.tsx";
 import FooterHome from "../components/pages/home/FooterHome.tsx";
+import {Alert, Snackbar} from "@mui/material";
 
 const UserProfile = () => {
-    const { user, setUser, editMode, setEditMode, handleSave, handleLogout } =
+    const { user,
+        setUser,
+        editMode,
+        setEditMode,
+        handleSave,
+        handleLogout,
+        snackbarOpen,
+        setSnackbarOpen,
+        snackbarMessage,
+        snackbarSeverity, } =
         useUserProfile();
 
     if (!user) {
@@ -242,6 +252,21 @@ const UserProfile = () => {
                     </Box>
                 </Paper>
             </Container>
+            <Snackbar
+                open={snackbarOpen}
+                autoHideDuration={3000}
+                onClose={() => setSnackbarOpen(false)}
+                anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+            >
+                <Alert
+                    onClose={() => setSnackbarOpen(false)}
+                    severity={snackbarSeverity}
+                    sx={{ width: "100%", fontWeight: "bold", boxShadow: "0px 3px 10px rgba(0,0,0,0.3)",
+                    }}
+                >
+                    {snackbarMessage}
+                </Alert>
+            </Snackbar>
             <FooterHome />
         </Box>
     );

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Box, Button, TextField } from "@mui/material";
-import type { Category } from "../../../hooks/useCategories.ts";
+import type {Category} from "../../../types/categoriesGet.ts";
 
 type Props = {
     category: Category;

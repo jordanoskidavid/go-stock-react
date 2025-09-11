@@ -1,4 +1,4 @@
-import { Box, Button, Typography } from "@mui/material";
+import {Alert, Box, Button, Snackbar, Typography} from "@mui/material";
 import CategoryForm from "../components/pages/categories/CategoryForm.tsx";
 import CategoriesList from "../components/pages/categories/CategoriesList.tsx";
 import FooterHome from "../components/pages/home/FooterHome.tsx";
@@ -13,6 +13,10 @@ const Categories = () => {
         setEditingCategory,
         handleSave,
         handleDelete,
+        snackbarOpen,
+        setSnackbarOpen,
+        snackbarMessage,
+        snackbarSeverity
     } = useCategories();
     const{ user } = useUserProfile();
     return (
@@ -72,8 +76,23 @@ const Categories = () => {
                     )
 
                 )}
-            </Box>
 
+            </Box>
+            <Snackbar
+                open={snackbarOpen}
+                autoHideDuration={3000}
+                onClose={() => setSnackbarOpen(false)}
+                anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+            >
+                <Alert
+                    onClose={() => setSnackbarOpen(false)}
+                    severity={snackbarSeverity}
+                    sx={{ width: "100%", fontWeight: "bold", boxShadow: "0px 3px 10px rgba(0,0,0,0.3)",
+                    }}
+                >
+                    {snackbarMessage}
+                </Alert>
+            </Snackbar>
             <FooterHome />
         </Box>
     );

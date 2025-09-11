@@ -7,12 +7,22 @@ export const useUsers = () => {
     const [editingUser, setEditingUser] = useState<User | null>(null);
     const [errors, setErrors] = useState<{ name?: string; email?: string; role?: string }>({});
 
+    const [snackbarOpen, setSnackbarOpen] = useState(false);
+    const [snackbarMessage, setSnackbarMessage] = useState("");
+    const [snackbarSeverity, setSnackbarSeverity] = useState<"success" | "error">("success");
+
+    const showSnackbar = (message: string, severity: "success" | "error") => {
+        setSnackbarMessage(message);
+        setSnackbarSeverity(severity);
+        setSnackbarOpen(true);
+    };
+
     const fetchData = async () => {
         try {
             const data = await getUsers();
             setUsers(data);
-        } catch (err) {
-            console.error("Failed to fetch users:", err);
+        } catch {
+            showSnackbar("Failed to fetch users", "error");
         }
     };
 
@@ -24,8 +34,9 @@ export const useUsers = () => {
         try {
             await deleteUser(id);
             setUsers((prev) => prev.filter((u) => u.id !== id));
-        } catch (err) {
-            console.error("Failed to delete user:", err);
+            showSnackbar("User deleted successfully", "success");
+        } catch {
+            showSnackbar("Failed to delete user", "error");
         }
     };
 
@@ -52,6 +63,7 @@ export const useUsers = () => {
 
         if (Object.keys(newErrors).length > 0) {
             setErrors(newErrors);
+            showSnackbar("Please fix the errors before saving", "error");
             return;
         }
 
@@ -67,8 +79,9 @@ export const useUsers = () => {
             );
 
             setEditingUser(null);
-        } catch (err) {
-            console.error("Failed to update user:", err);
+            showSnackbar("User updated successfully", "success");
+        } catch {
+            showSnackbar("Failed to update user", "error");
         }
     };
 
@@ -80,5 +93,9 @@ export const useUsers = () => {
         handleDelete,
         handleEdit,
         handleSave,
+        snackbarOpen,
+        setSnackbarOpen,
+        snackbarMessage,
+        snackbarSeverity,
     };
 };
