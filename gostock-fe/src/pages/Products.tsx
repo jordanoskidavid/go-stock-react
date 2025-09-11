@@ -10,32 +10,14 @@ const Products = () => {
         products,
         editingProduct,
         setEditingProduct,
-        handleSave,
         handleDelete,
-    } = useProducts([
-        {
-            id: 1,
-            name: "Kandi Cokolatce",
-            description: "Malo cokolatce",
-            price: 35,
-            stock: 100,
-            category_id: 1,
-        },
-        {
-            id: 2,
-            name: "Laptop",
-            description: "Gaming Laptop",
-            price: 1200,
-            stock: 10,
-            category_id: 1,
-        },
-    ]);
+    } = useProducts();
 
     return (
         <Box sx={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}>
             <ProductsHeader />
 
-            <Box sx={{ flexGrow: 1, display: "flex", flexDirection: "column", gap: 2, p: 3 }}>
+            <Box sx={{ flexGrow: 1, display: "flex", flexDirection: "column", gap: 2 }}>
                 <Typography variant="h4" gutterBottom color="#e3f2fd">
                     Products
                 </Typography>
@@ -43,7 +25,7 @@ const Products = () => {
                 {editingProduct ? (
                     <ProductForm
                         product={editingProduct}
-                        onSave={handleSave}
+                        onSave={() => setEditingProduct(null)}
                         onCancel={() => setEditingProduct(null)}
                     />
                 ) : (
@@ -52,16 +34,6 @@ const Products = () => {
                             <Button
                                 variant="contained"
                                 sx={{ width: "150px", fontWeight:"bold"}}
-                                onClick={() =>
-                                    setEditingProduct({
-                                        id: 0,
-                                        name: "",
-                                        description: "",
-                                        price: 0,
-                                        stock: 0,
-                                        category_id: 1,
-                                    })
-                                }
                             >
                                 Add Product
                             </Button>
