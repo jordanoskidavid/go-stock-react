@@ -3,4 +3,14 @@ html, body, #root {
     margin: 0;
     padding: 0;
     background-color: #e3f2fd;
+    input:-webkit-autofill {
+        -webkit-box-shadow: 0 0 0 1000px #002A41 inset !important; /* background */
+        -webkit-text-fill-color: #e3f2fd !important; /* text color */
+        caret-color: #e3f2fd !important; /* cursor color */
+    }
+
+    input:-webkit-autofill:focus {
+        -webkit-box-shadow: 0 0 0 1000px #002A41 inset !important;
+        -webkit-text-fill-color: #e3f2fd !important;
+    }
 }
