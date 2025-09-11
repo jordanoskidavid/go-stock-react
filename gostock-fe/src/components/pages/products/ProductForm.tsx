@@ -1,14 +1,7 @@
 import { Box, Button, TextField, MenuItem } from "@mui/material";
 import { useState } from "react";
+import type {Product} from "../../../types/productsGet.ts";
 
-type Product = {
-    id: number;
-    name: string;
-    description: string;
-    price: number;
-    stock: number;
-    category_id: number;
-};
 
 type Props = {
     product: Product;
@@ -93,9 +86,7 @@ const ProductForm = ({ product, onSave, onCancel }: Props) => {
                     helperText={errors.category_id}
                     sx={{ "& .MuiInputBase-input": { color: "#e3f2fd" }, "& .MuiInputLabel-root": { color: "#e3f2fd" } }}
                 >
-                    <MenuItem value={1}>Electronics</MenuItem>
-                    <MenuItem value={2}>Clothing</MenuItem>
-                    <MenuItem value={3}>Food</MenuItem>
+                    <MenuItem value={form.category_id}>{form.category}</MenuItem>
                 </TextField>
 
                 <Box sx={{ display: "flex", gap: 2, justifyContent: "flex-end" }}>
