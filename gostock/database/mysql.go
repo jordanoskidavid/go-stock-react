@@ -2,10 +2,11 @@ package database
 
 import (
 	"fmt"
-	"github.com/jordanoskidavid/go-stock-react/models"
 	"log"
 	"os"
 	"time"
+
+	"github.com/jordanoskidavid/go-stock-react/models"
 
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
@@ -52,6 +53,11 @@ func ConnectDB() {
 
 	log.Println("Connected to MySQL!")
 	DB = db
+
+	err = db.AutoMigrate(&models.PasswordReset{})
+	if err != nil {
+		return
+	}
 
 	err = db.AutoMigrate(&models.User{})
 	if err != nil {
