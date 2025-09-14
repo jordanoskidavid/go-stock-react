@@ -10,6 +10,8 @@ import (
 func SetupRoutes() {
 	//routes for all users
 	http.HandleFunc("/api/login", handlers.Login)
+	http.HandleFunc("/api/forgot-password", handlers.ForgotPassword)
+	http.HandleFunc("/api/reset-password", handlers.ResetPassword)
 
 	//routes for admin, manager and employee
 	//get the employee data
