@@ -22,7 +22,6 @@ const CustomTextField = ({ label, value, onChange, type = "text" }: CustomTextFi
                     "& fieldset": { borderColor: "#e3f2fd" },
                     "&:hover fieldset": { borderColor: "#008DDA" },
                     "&.Mui-focused fieldset": { borderColor: "#008DDA" },
-                    // autofill styles
                     "& input:-webkit-autofill": {
                         WebkitBoxShadow: "0 0 0 1000px #002A41 inset",
                         WebkitTextFillColor: "#e3f2fd",

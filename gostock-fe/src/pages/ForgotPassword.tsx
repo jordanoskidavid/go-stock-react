@@ -1,19 +1,12 @@
-import { useLogin } from "../hooks/useLogin.ts";
-import SubmitButton from "../components/ui/submitButton";
+import { Container, Paper, Typography, Alert, Box } from "@mui/material";
 import { Link } from "react-router-dom";
+import { Helmet } from "react-helmet-async";
+import CustomTextField from "../components/ui/customTextField";
+import SubmitButton from "../components/ui/submitButton";
+import { useForgotPassword } from "../hooks/useForgotPassword";
 
-import {
-    Container,
-    Paper,
-    Typography,
-    Alert,
-    Box,
-} from "@mui/material";
-import CustomTextField from "../components/ui/customTextField.tsx";
-import {Helmet} from "react-helmet-async";
-const Login = () => {
-    const { email, password, setEmail, setPassword, error, handleSubmit } =
-        useLogin();
+const ForgotPassword = () => {
+    const { email, setEmail, error, success, handleSubmit } = useForgotPassword();
 
     return (
         <Container
@@ -22,14 +15,14 @@ const Login = () => {
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
-
-                minHeight: "100dvh"
+                minHeight: "100dvh",
             }}
         >
             <Helmet>
-            <title>Login | GoStock</title>
-            <meta name="description" content="Login with your credentials." />
+                <title>Forgot Password | GoStock</title>
+                <meta name="description" content="Reset your password." />
             </Helmet>
+
             <Paper
                 elevation={3}
                 sx={{
@@ -38,11 +31,10 @@ const Login = () => {
                     borderRadius: 3,
                     overflow: "hidden",
                     width: "80%",
-                    backgroundColor: "#002A41",
                     maxWidth: "900px",
+                    backgroundColor: "#002A41",
                 }}
             >
-
                 <Box
                     sx={{
                         flex: 1,
@@ -62,7 +54,7 @@ const Login = () => {
                             width: "100%",
                             maxWidth: "300px",
                             height: "auto",
-                            marginBottom: {xs: "-10px",sm:"-40px", md:"-40px"}
+                            marginBottom: { xs: "-10px", sm: "-40px", md: "-40px" },
                         }}
                     />
 
@@ -73,32 +65,47 @@ const Login = () => {
                             fontWeight: "bold",
                             color: "#e3f2fd",
                             fontSize: { xs: "1.8rem", sm: "1.25rem", md: "1.5rem" },
-                          }}
+                        }}
                     >
                         Simplify. Organize. Succeed
                     </Typography>
                 </Box>
 
-                <Box sx={{ flex: 1, p: 4, mt: { xs: -3, md: 0 }, color:"#e3f2fd"}}>
+                <Box sx={{ flex: 1, p: 4, mt: { xs: -3, md: 0 }, color: "#e3f2fd" }}>
                     <Typography variant="h4" align="center" gutterBottom>
-                        Log In
+                        Forgot Password
                     </Typography>
 
                     {error && (
-                        <Alert severity="error" sx={{ mb: 2, backgroundColor:"#e3f2fd", color:"#002A41" }}>
+                        <Alert severity="error" sx={{ mb: 2, backgroundColor: "#e3f2fd", color: "#002A41" }}>
                             {error}
                         </Alert>
                     )}
 
-                    <Box component="form" onSubmit={handleSubmit} noValidate>
-                        <CustomTextField label={"Email"} type={"email"} value={email} onChange={(e) => setEmail(e.target.value)} />
+                    {success && (
+                        <Alert severity="success" sx={{ mb: 2, backgroundColor: "#e3f2fd", color: "#002A41" }}>
+                            {success}
+                        </Alert>
+                    )}
 
-                        <CustomTextField label={"Password"} type={"password"} value={password} onChange={(e) => setPassword(e.target.value)} />
-                        <br/>
+                    <Box component="form" onSubmit={handleSubmit} noValidate>
+                        <CustomTextField
+                            label="Email"
+                            type="email"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                        />
+
+                        <Box>
+                            <SubmitButton text="Send Reset Link" />
+                        </Box>
+
                         <Typography
                             component={Link}
-                            to="/forgot-password"
+                            to="/login"
                             sx={{
+                                display: "block",
+                                mt: 2,
                                 textDecoration: "none",
                                 fontSize: "20px",
                                 color: "#008DDA",
@@ -108,9 +115,8 @@ const Login = () => {
                                 },
                             }}
                         >
-                            Forgot password?
+                            Back to login
                         </Typography>
-                        <SubmitButton text={"Login"}/>
                     </Box>
                 </Box>
             </Paper>
@@ -118,4 +124,4 @@ const Login = () => {
     );
 };
 
-export default Login;
+export default ForgotPassword;

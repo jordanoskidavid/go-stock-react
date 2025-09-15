@@ -6,6 +6,7 @@ import Register from "../pages/Register.tsx";
 import Users from "../pages/Users.tsx";
 import Categories from "../pages/Categories.tsx";
 import Products from "../pages/Products.tsx";
+import ForgotPassword from "../pages/ForgotPassword.tsx";
 
 export interface RouteType {
     path: string;
@@ -19,7 +20,7 @@ export const routes: RouteType[] = [
     { path: "/register", element: Register},
     { path: "/users", element: Users},
     { path: "/categories", element: Categories},
-    { path: "/products", element:Products}
-
+    { path: "/products", element:Products},
+    { path: "/forgot-password", element: ForgotPassword}
 ];
 
