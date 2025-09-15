@@ -10,7 +10,7 @@ const Router: React.FC = () => {
     return (
         <Routes>
             {routes.map(({ path, element: Element }) => {
-                if (path === "/login" || path === "/forgot-password") {
+                if (path === "/login" || path === "/forgot-password" || path === "/reset-password") {
                     return (
                         <Route
                             key={path}

@@ -1,12 +1,24 @@
 import { Container, Paper, Typography, Alert, Box } from "@mui/material";
-import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import CustomTextField from "../components/ui/customTextField";
 import SubmitButton from "../components/ui/submitButton";
-import { useForgotPassword } from "../hooks/useForgotPassword";
+import { useResetPassword } from "../hooks/useResetPassword";
+import {Link} from "react-router-dom";
 
-const ForgotPassword = () => {
-    const { email, setEmail, error, success, handleSubmit } = useForgotPassword();
+const ResetPassword = () => {
+    const {
+        email,
+        setEmail,
+        code,
+        setCode,
+        new_password,
+        setNewPassword,
+        confirmPassword,
+        setConfirmPassword,
+        error,
+        success,
+        handleSubmit,
+    } = useResetPassword();
 
     return (
         <Container
@@ -19,8 +31,8 @@ const ForgotPassword = () => {
             }}
         >
             <Helmet>
-                <title>Forgot Password | GoStock</title>
-                <meta name="description" content="Reset your password." />
+                <title>Reset Password | GoStock</title>
+                <meta name="description" content="Reset your password with the code sent to your email." />
             </Helmet>
 
             <Paper
@@ -38,42 +50,16 @@ const ForgotPassword = () => {
                 <Box
                     sx={{
                         flex: 1,
-                        backgroundColor: "transparent",
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        flexDirection: "column",
                         p: 4,
+                        mt: { xs: -3, md: 0 },
+                        color: "#e3f2fd",
+                        display: "flex",
+                        flexDirection: "column",
+                        alignItems: "center",
                     }}
                 >
-                    <Box
-                        component="img"
-                        src="/logo.png"
-                        alt="Logo"
-                        sx={{
-                            width: "100%",
-                            maxWidth: "300px",
-                            height: "auto",
-                            marginBottom: { xs: "-10px", sm: "-40px", md: "-40px" },
-                        }}
-                    />
-
-                    <Typography
-                        variant="h5"
-                        align="center"
-                        sx={{
-                            fontWeight: "bold",
-                            color: "#e3f2fd",
-                            fontSize: { xs: "1.8rem", sm: "1.25rem", md: "1.5rem" },
-                        }}
-                    >
-                        Simplify. Organize. Succeed
-                    </Typography>
-                </Box>
-
-                <Box sx={{ flex: 1, p: 4, mt: { xs: -3, md: 0 }, color: "#e3f2fd" }}>
                     <Typography variant="h4" align="center" gutterBottom>
-                        Forgot Password
+                        Reset Password
                     </Typography>
 
                     {error && (
@@ -88,33 +74,34 @@ const ForgotPassword = () => {
                         </Alert>
                     )}
 
-                    <Box component="form" onSubmit={handleSubmit} noValidate>
+                    <Box component="form" onSubmit={handleSubmit} noValidate sx={{ width: "100%", maxWidth: 400 }}>
                         <CustomTextField
                             label="Email"
                             type="email"
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
                         />
-                        <Typography
-                            component={Link}
-                            to="/reset-password"
-                            sx={{
-                                display: "block",
-                                textDecoration: "none",
-                                fontSize: "20px",
-                                color: "#008DDA",
-                                "&:hover": {
-                                    color: "#005f99",
-                                    textDecoration: "none",
-                                },
-                            }}
-                        >
-                            Reset your password
-                        </Typography>
 
-                        <Box>
-                            <SubmitButton text="Send Reset Link" />
-                        </Box>
+                        <CustomTextField
+                            label="Reset Code"
+                            type="text"
+                            value={code}
+                            onChange={(e) => setCode(e.target.value)}
+                        />
+
+                        <CustomTextField
+                            label="New Password"
+                            type="password"
+                            value={new_password}
+                            onChange={(e) => setNewPassword(e.target.value)}
+                        />
+
+                        <CustomTextField
+                            label="Confirm Password"
+                            type="password"
+                            value={confirmPassword}
+                            onChange={(e) => setConfirmPassword(e.target.value)}
+                        />
 
                         <Typography
                             component={Link}
@@ -133,8 +120,9 @@ const ForgotPassword = () => {
                         >
                             Back to login
                         </Typography>
-
-
+                        <Box>
+                            <SubmitButton text="Reset Password" />
+                        </Box>
                     </Box>
                 </Box>
             </Paper>
@@ -142,4 +130,4 @@ const ForgotPassword = () => {
     );
 };
 
-export default ForgotPassword;
+export default ResetPassword;
