@@ -58,6 +58,7 @@ func ConnectDB() {
 	if err != nil {
 		return
 	}
+	err = DB.AutoMigrate(&models.Order{}, &models.OrderProduct{})
 
 	err = db.AutoMigrate(&models.User{})
 	if err != nil {
