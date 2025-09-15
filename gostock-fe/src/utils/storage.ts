@@ -11,5 +11,5 @@ export function clearToken() {
 }
 export const isLoggedIn = () => {
     const token = getToken();
-    return !!token; // true if token exists
+    return !!token;
 };
