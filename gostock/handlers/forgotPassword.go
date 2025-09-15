@@ -31,11 +31,11 @@ func ForgotPassword(w http.ResponseWriter, r *http.Request) {
 	reset := models.PasswordReset{
 		Email:     input.Email,
 		Code:      code,
-		ExpiresAt: time.Now().Add(15 * time.Minute), // expires in 15 min
+		ExpiresAt: time.Now().Add(15 * time.Minute),
 	}
 	database.DB.Create(&reset)
 
-	err := utils.SendEmail(input.Email, "Password Reset Code", "Your reset code is: "+code)
+	err := utils.SendEmail(input.Email, "Password Reset Code - GoStock", "Your reset code is: "+code)
 	if err != nil {
 		http.Error(w, "Failed to send email", http.StatusInternalServerError)
 		return
