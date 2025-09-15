@@ -1,6 +1,7 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import type { ResetPasswordPayload } from "../types/forgotPassword.ts";
 import {ResetPassword} from "../services/password.ts";
+import {useNavigate} from "react-router-dom";
 
 export const useResetPassword = () => {
     const [email, setEmail] = useState("");
@@ -9,7 +10,7 @@ export const useResetPassword = () => {
     const [confirmPassword, setConfirmPassword] = useState("");
     const [error, setError] = useState("");
     const [success, setSuccess] = useState("");
-
+    const navigate = useNavigate();
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setError("");
@@ -33,6 +34,7 @@ export const useResetPassword = () => {
             setNewPassword("")
             setConfirmPassword("");
             setEmail("");
+            setTimeout(() => (navigate('/login')), 1000);
         } catch {
             setError("Something went wrong.");
         }

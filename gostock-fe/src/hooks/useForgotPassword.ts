@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import type { ForgotPassword } from "../types/forgotPassword.ts";
 import {ResetLink} from "../services/password.ts";
+import {useNavigate} from "react-router-dom";
 
 export const useForgotPassword = () => {
     const [email, setEmail] = useState("");
     const [error, setError] = useState("");
     const [success, setSuccess] = useState("");
-
+    const navigate = useNavigate();
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setError("");
@@ -22,7 +23,7 @@ export const useForgotPassword = () => {
             await ResetLink(payload);
             setSuccess("Password reset code has been sent to your email.");
             setEmail("");
-        } catch  {
+            setTimeout(() => (navigate('/reset-password')), 1000);        } catch  {
             setError("Something went wrong.");
         }
     };

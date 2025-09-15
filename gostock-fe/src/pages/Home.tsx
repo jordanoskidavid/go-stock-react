@@ -3,7 +3,9 @@ import HeaderHome from "../components/pages/home/HeaderHome.tsx";
 import FooterHome from "../components/pages/home/FooterHome";
 import Card from "../components/ui/card.tsx";
 import { Link } from "react-router-dom";
+import {useUserProfile} from "../hooks/useUserProfile.ts";
 const Home = () => {
+    const {user} = useUserProfile();
     return (
         <Box
             sx={{
@@ -38,19 +40,37 @@ const Home = () => {
                         gap: 4,
                     }}
                 >
-                    <Link to={'/categories'} style={{ textDecoration: "none" }}>
-                        <Card title="CATEGORIES" />
-                    </Link>
-                    <Link to={'/users'} style={{ textDecoration: "none" }}>
-                    <Card title="USERS" />
-                    </Link>
-                    <Link to={'/products'} style={{ textDecoration: "none" }}>
-                    <Card title="PRODUCTS" />
-                    </Link>
-                    <Link to={'/orders'} style={{ textDecoration: "none" }}>
-                    <Card title="ORDERS" />
-                    </Link>
-                    </Box>
+
+                    {(user?.role === "admin" || user?.role === "manager") ? (
+                        <>
+                            <Link to={"/categories"} style={{ textDecoration: "none" }}>
+                                <Card title="CATEGORIES" />
+                            </Link>
+                            <Link to={"/users"} style={{ textDecoration: "none" }}>
+                                <Card title="USERS" />
+                            </Link>
+                            <Link to={"/products"} style={{ textDecoration: "none" }}>
+                                <Card title="PRODUCTS" />
+                            </Link>
+                            <Link to={"/orders"} style={{ textDecoration: "none" }}>
+                                <Card title="ORDERS" />
+                            </Link>
+                        </>
+                    ) : (
+                        <>
+                            <Link to={"/categories"} style={{ textDecoration: "none" }}>
+                                <Card title="CATEGORIES" />
+                            </Link>
+                            <Link to={"/users"} style={{ textDecoration: "none" }}>
+                                <Card title="USERS" />
+                            </Link>
+                            <Link to={"/products"} style={{ textDecoration: "none" }}>
+                                <Card title="PRODUCTS" />
+                            </Link>
+                        </>
+                    )}
+
+                </Box>
             </Box>
 
             <FooterHome />

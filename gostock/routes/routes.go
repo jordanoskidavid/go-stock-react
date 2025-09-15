@@ -46,22 +46,22 @@ func SetupRoutes() {
 	//routes for manager and admin
 	//create order
 	http.HandleFunc("/api/orders/create", middleware.AuthMiddleware(
-		middleware.RoleMiddleware(handlers.CreateOrder, "admin", "manager"),
+		middleware.RoleMiddleware(handlers.CreateOrder, "admin", "manager", "employee"),
 	))
 	//get order by ID
 	http.HandleFunc("/api/orders/", middleware.AuthMiddleware(
-		middleware.RoleMiddleware(handlers.GetOrderByID, "admin", "manager"),
+		middleware.RoleMiddleware(handlers.GetOrderByID, "admin", "manager", "employee"),
 	))
 	//get all orders
 	http.HandleFunc("/api/orders", middleware.AuthMiddleware(
-		middleware.RoleMiddleware(handlers.GetAllOrders, "admin", "manager"),
+		middleware.RoleMiddleware(handlers.GetAllOrders, "admin", "manager", "employee"),
 	))
 	//update order status by ID
 	http.HandleFunc("/api/orders/status/", middleware.AuthMiddleware(
-		middleware.RoleMiddleware(handlers.UpdateOrderStatus, "admin", "manager"),
+		middleware.RoleMiddleware(handlers.UpdateOrderStatus, "admin", "manager", "employee"),
 	))
 	http.HandleFunc("/api/orders/delete/", middleware.AuthMiddleware(
-		middleware.RoleMiddleware(handlers.DeleteOrder, "admin", "manager"),
+		middleware.RoleMiddleware(handlers.DeleteOrder, "admin", "manager", "employee"),
 	))
 
 	//create product

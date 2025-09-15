@@ -95,22 +95,7 @@ const ForgotPassword = () => {
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
                         />
-                        <Typography
-                            component={Link}
-                            to="/reset-password"
-                            sx={{
-                                display: "block",
-                                textDecoration: "none",
-                                fontSize: "20px",
-                                color: "#008DDA",
-                                "&:hover": {
-                                    color: "#005f99",
-                                    textDecoration: "none",
-                                },
-                            }}
-                        >
-                            Reset your password
-                        </Typography>
+
 
                         <Box>
                             <SubmitButton text="Send Reset Link" />
