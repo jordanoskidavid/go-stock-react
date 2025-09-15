@@ -6,7 +6,7 @@ import (
 
 func SendEmail(to, subject, body string) error {
 	from := "gostockreact@gmail.com"
-	password := "koqv wura xlic temy" // use Gmail App Password, not your main one
+	password := "koqv wura xlic temy"
 
 	msg := "From: " + from + "\n" +
 		"To: " + to + "\n" +
