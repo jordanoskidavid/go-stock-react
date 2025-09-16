@@ -18,6 +18,7 @@ const ProductsList = ({ products, onEdit, onDelete }: {
                 { id: "id", label: "ID" },
                 { id: "name", label: "Name" },
                 { id: "description", label: "Description" },
+                { id: "location", label: "Location" },
                 { id: "price", label: "Price", render: (p: Product) => `${p.price}` },
                 { id: "stock", label: "Stock" },
                 { id: "category", label: "Category" },

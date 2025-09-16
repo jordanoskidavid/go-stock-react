@@ -38,6 +38,7 @@ func GetAllProducts(w http.ResponseWriter, r *http.Request) {
 			Name:        p.Name,
 			Description: p.Description,
 			Price:       p.Price,
+			Location:    p.Location,
 			Stock:       p.Stock,
 			CategoryID:  p.CategoryID,
 			Category:    p.Category.Name,
@@ -67,6 +68,7 @@ func GetProductByID(w http.ResponseWriter, r *http.Request) {
 		Name:        product.Name,
 		Description: product.Description,
 		Price:       product.Price,
+		Location:    product.Location,
 		Stock:       product.Stock,
 		CategoryID:  product.CategoryID,
 		Category:    product.Category.Name,
@@ -97,6 +99,7 @@ func CreateProduct(w http.ResponseWriter, r *http.Request) {
 		Name:        input.Name,
 		Description: input.Description,
 		Price:       input.Price,
+		Location:    input.Location,
 		Stock:       input.Stock,
 		CategoryID:  input.CategoryID,
 		CreatedAt:   input.CreatedAt,
@@ -134,6 +137,7 @@ func UpdateProductByID(w http.ResponseWriter, r *http.Request) {
 	product.Name = input.Name
 	product.Description = input.Description
 	product.Price = input.Price
+	product.Location = input.Location
 	product.Stock = input.Stock
 	product.CategoryID = input.CategoryID
 
@@ -152,6 +156,7 @@ func UpdateProductByID(w http.ResponseWriter, r *http.Request) {
 		Name:        product.Name,
 		Description: product.Description,
 		Price:       product.Price,
+		Location:    product.Location,
 		Stock:       product.Stock,
 		CategoryID:  product.CategoryID,
 		Category:    product.Category.Name,

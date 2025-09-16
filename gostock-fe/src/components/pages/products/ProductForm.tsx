@@ -34,6 +34,8 @@ const ProductForm = ({ product, onSave, onCancel }: Props) => {
         const newErrors: Partial<Record<keyof Product, string>> = {};
         if (!form.name.trim()) newErrors.name = "Name is required";
         if (!form.description.trim()) newErrors.description = "Description is required";
+        if (!form.location.trim()) newErrors.location = "Location is required";
+
         if (form.price <= 0) newErrors.price = "Price must be greater than 0";
         if (form.stock < 0) newErrors.stock = "Stock cannot be negative";
         if (!form.category_id) newErrors.category_id = "Category is required";
@@ -45,6 +47,8 @@ const ProductForm = ({ product, onSave, onCancel }: Props) => {
     const handleSubmit = () => {
         if (!validate()) return;
         onSave(form);
+        console.log("Saving product:", form);
+
     };
 
     return (
@@ -80,6 +84,15 @@ const ProductForm = ({ product, onSave, onCancel }: Props) => {
                     rows={3}
                     error={!!errors.description}
                     helperText={errors.description}
+                    sx={{ "& .MuiInputBase-input": { color: "#e3f2fd" }, "& .MuiInputLabel-root": { color: "#e3f2fd" } }}
+                />
+                <TextField
+                    label="Location"
+                    value={form.location}
+                    onChange={(e) => handleChange("location", e.target.value)}
+                    fullWidth
+                    error={!!errors.location}
+                    helperText={errors.location}
                     sx={{ "& .MuiInputBase-input": { color: "#e3f2fd" }, "& .MuiInputLabel-root": { color: "#e3f2fd" } }}
                 />
                 <TextField

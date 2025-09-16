@@ -9,6 +9,7 @@ type Product struct {
 	Name        string    `json:"name"`
 	Description string    `json:"description"`
 	Price       float64   `json:"price"`
+	Location    string    `json:"location"`
 	Stock       int       `json:"stock"`
 	CategoryID  *uint     `json:"category_id"`        // nullable
 	Category    *Category `json:"category,omitempty"` // preload if needed
@@ -21,6 +22,7 @@ type ProductResponse struct {
 	Name        string    `json:"name"`
 	Description string    `json:"description"`
 	Price       float64   `json:"price"`
+	Location    string    `json:"location"`
 	Stock       int       `json:"stock"`
 	CategoryID  *uint     `json:"category_id,omitempty"`
 	Category    string    `json:"category"`

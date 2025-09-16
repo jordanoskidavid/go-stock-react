@@ -41,6 +41,7 @@ export function useProducts() {
                 const response = await addProduct({
                     name: prod.name,
                     description: prod.description,
+                    location: prod.location,
                     price: prod.price,
                     stock: prod.stock,
                     category_id: prod.category_id,
@@ -52,6 +53,7 @@ export function useProducts() {
                 const response = await updateProduct(prod.id, {
                     name: prod.name,
                     description: prod.description,
+                    location: prod.location,
                     price: prod.price,
                     stock: prod.stock,
                     category_id: prod.category_id,
