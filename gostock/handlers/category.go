@@ -73,6 +73,7 @@ func UpdateCategory(w http.ResponseWriter, r *http.Request) {
 	}
 
 	category.Name = input.Name
+	category.Description = input.Description
 
 	if err := database.DB.Save(&category).Error; err != nil {
 		http.Error(w, "Failed to update category", http.StatusInternalServerError)

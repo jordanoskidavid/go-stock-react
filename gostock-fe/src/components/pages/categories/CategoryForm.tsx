@@ -1,24 +1,29 @@
 import { useState } from "react";
 import { Box, Button, TextField } from "@mui/material";
-import type {Category} from "../../../types/categoriesGet.ts";
+import type { Category } from "../../../types/categoriesGet.ts";
 
 type Props = {
     category: Category;
-    onSave: (cat: { name: string }, id?: number) => void;
+    onSave: (cat: { name: string; description: string }, id?: number) => void;
     onCancel: () => void;
 };
 
 const CategoryForm = ({ category, onSave, onCancel }: Props) => {
-    const [name, setName] = useState(category.name);
-    const [error, setError] = useState("");
+    const [name, setName] = useState(category.name || "");
+    const [description, setDescription] = useState(category.description || "");
+    const [errors, setErrors] = useState<{ name?: string; description?: string }>({});
 
     const handleSubmit = () => {
-        if (!name.trim()) {
-            setError("Name is required");
+        const newErrors: { name?: string; description?: string } = {};
+        if (!name.trim()) newErrors.name = "Name is required";
+        if (!description.trim()) newErrors.description = "Description is required";
+
+        if (Object.keys(newErrors).length > 0) {
+            setErrors(newErrors);
             return;
         }
 
-        const catData = { name };
+        const catData = { name, description };
         if (category.id) {
             onSave(catData, category.id);
         } else {
@@ -26,9 +31,15 @@ const CategoryForm = ({ category, onSave, onCancel }: Props) => {
         }
     };
 
-    const handleChange = (value: string) => {
-        setName(value);
-        if (error) setError(""); // clear error on change
+    const handleChange = (field: "name" | "description", value: string) => {
+        if (field === "name") {
+            setName(value);
+            if (errors.name) setErrors((prev) => ({ ...prev, name: undefined }));
+        }
+        if (field === "description") {
+            setDescription(value);
+            if (errors.description) setErrors((prev) => ({ ...prev, description: undefined }));
+        }
     };
 
     return (
@@ -49,11 +60,30 @@ const CategoryForm = ({ category, onSave, onCancel }: Props) => {
                 <TextField
                     label="Name"
                     value={name}
-                    onChange={(e) => handleChange(e.target.value)}
+                    onChange={(e) => handleChange("name", e.target.value)}
                     fullWidth
                     variant="outlined"
-                    error={!!error}
-                    helperText={error}
+                    error={!!errors.name}
+                    helperText={errors.name}
+                    sx={{
+                        "& .MuiOutlinedInput-root": {
+                            "& fieldset": { borderColor: "#e3f2fd" },
+                            "&:hover fieldset": { borderColor: "#00AEEF" },
+                            "&.Mui-focused fieldset": { borderColor: "#00AEEF" },
+                        },
+                        "& .MuiInputBase-input": { color: "#e3f2fd" },
+                        "& .MuiInputLabel-root": { color: "#e3f2fd" },
+                        "& .MuiInputLabel-root.Mui-focused": { color: "#e3f2fd" },
+                    }}
+                />
+                <TextField
+                    label="Description"
+                    value={description}
+                    onChange={(e) => handleChange("description", e.target.value)}
+                    fullWidth
+                    variant="outlined"
+                    error={!!errors.description}
+                    helperText={errors.description}
                     sx={{
                         "& .MuiOutlinedInput-root": {
                             "& fieldset": { borderColor: "#e3f2fd" },
