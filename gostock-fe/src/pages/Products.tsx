@@ -45,6 +45,7 @@ const Products = () => {
                                     name: "",
                                     description: "",
                                     price: 0,
+                                    location: "",
                                     stock: 0,
                                     category_id: 0,
                                     category: "",

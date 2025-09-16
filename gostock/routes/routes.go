@@ -66,7 +66,7 @@ func SetupRoutes() {
 
 	//create product
 	http.HandleFunc("/api/products/create-product", middleware.AuthMiddleware(
-		middleware.RoleMiddleware(handlers.CreateProduct, "admin", "manager"),
+		middleware.RoleMiddleware(handlers.CreateProduct, "admin", "manager", "employee"),
 	))
 	//update product
 	http.HandleFunc("/api/products/update-product/", middleware.AuthMiddleware(
