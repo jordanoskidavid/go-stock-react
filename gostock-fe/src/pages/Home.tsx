@@ -38,19 +38,19 @@ const Home = () => {
                         gap: 4,
                     }}
                 >
-                    <Link to={'/categories'} style={{ textDecoration: "none" }}>
-                        <Card title="CATEGORIES" />
-                    </Link>
-                    <Link to={'/users'} style={{ textDecoration: "none" }}>
-                    <Card title="USERS" />
-                    </Link>
-                    <Link to={'/products'} style={{ textDecoration: "none" }}>
-                    <Card title="PRODUCTS" />
-                    </Link>
-                    <Link to={'/orders'} style={{ textDecoration: "none" }}>
-                    <Card title="ORDERS" />
-                    </Link>
-                    </Box>
+                            <Link to={"/categories"} style={{ textDecoration: "none" }}>
+                                <Card title="CATEGORIES" />
+                            </Link>
+                            <Link to={"/users"} style={{ textDecoration: "none" }}>
+                                <Card title="USERS" />
+                            </Link>
+                            <Link to={"/products"} style={{ textDecoration: "none" }}>
+                                <Card title="PRODUCTS" />
+                            </Link>
+                            <Link to={"/orders"} style={{ textDecoration: "none" }}>
+                                <Card title="ORDERS" />
+                            </Link>
+                </Box>
             </Box>
 
             <FooterHome />
