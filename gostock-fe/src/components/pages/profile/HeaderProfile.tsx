@@ -42,7 +42,7 @@ const HeaderProfile = () => {
                             px: 3,
                         }}
                     >
-                        Register
+                        Add a User
                     </Button>                </Link>
                 ):(
                     <Link to="/">

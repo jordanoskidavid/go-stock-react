@@ -17,6 +17,7 @@ const CategoriesList = ({ categories, onEdit, onDelete }: Props) => {
             columns={[
                 { id: "id", label: "ID" },
                 { id: "name", label: "Name" },
+                { id: "description", label: "Description" },
                 {
                     id: "actions",
                     label: "Actions",

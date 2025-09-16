@@ -54,7 +54,7 @@ const Categories = () => {
                             <Button
                                 variant="contained"
                                 sx={{ width: "150px", fontWeight:"bold"}}
-                                onClick={() => setEditingCategory({ id: 0, name: "" })}
+                                onClick={() => setEditingCategory({ id: 0, name: "", description: ""})}
                             >
                                 Add Category
                             </Button>
