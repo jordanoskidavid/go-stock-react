@@ -52,7 +52,7 @@ const ProductForm = ({ product, onSave, onCancel }: Props) => {
     };
 
     return (
-        <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center"}}>
+        <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center", mt:-5}}>
             <Box
                 sx={{
                     display: "flex",
