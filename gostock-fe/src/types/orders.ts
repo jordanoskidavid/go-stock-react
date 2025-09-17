@@ -25,3 +25,17 @@ export interface Order {
     updated_at: string;
     products: OrderProduct[];
 }
+
+
+export interface OrderProductInput {
+    product_id: number;
+    quantity: number;
+}
+
+export interface CreateOrderPayload {
+    user_id: number;
+    products: OrderProductInput[];
+}
+export type UpdateOrderStatusPayload = {
+    status: "pending" | "shipped" | "delivered";
+};

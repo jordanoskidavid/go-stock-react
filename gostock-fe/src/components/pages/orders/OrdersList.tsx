@@ -3,9 +3,10 @@ import { Edit, Delete } from "@mui/icons-material";
 import DataTable from "../../ui/dataTable";
 import type { Order } from "../../../types/orders.ts";
 
-const OrdersList = ({ orders, onEdit }: {
+const OrdersList = ({ orders, onEdit, onDelete }: {
     orders: Order[];
     onEdit: (order: Order) => void;
+    onDelete: (id: number) => void;   // include here
 }) => {
     return (
         <DataTable
@@ -13,7 +14,6 @@ const OrdersList = ({ orders, onEdit }: {
             columns={[
                 { id: "id", label: "ID" },
                 { id: "user_id", label: "UID" },
-
                 {
                     id: "products",
                     label: "Products",
@@ -55,6 +55,7 @@ const OrdersList = ({ orders, onEdit }: {
                     label: "Total",
                     render: (o: Order) => `$${o.total}`,
                 },
+                { id: "status", label: "Status" },
 
                 {
                     id: "created_at",
@@ -84,7 +85,7 @@ const OrdersList = ({ orders, onEdit }: {
                             <IconButton onClick={() => onEdit(o)}>
                                 <Edit sx={{ color: "#00AEEF" }} />
                             </IconButton>
-                            <IconButton onClick={() => console.log("Delete order placeholder", o.id)}>
+                            <IconButton onClick={() => onDelete(o.id)}> {/* ✅ FIX */}
                                 <Delete sx={{ color: "red" }} />
                             </IconButton>
                         </Box>
