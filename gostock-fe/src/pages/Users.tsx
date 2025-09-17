@@ -106,7 +106,6 @@ const Users = () => {
                 />
             </Box>
 
-            {/* Edit Dialog */}
             <Dialog
                 open={!!editingUser}
                 onClose={() => setEditingUser(null)}
@@ -193,9 +192,17 @@ const Users = () => {
                             }}
                         >
                             <MenuItem value="admin">Admin</MenuItem>
-                            <MenuItem value="manager">Manager</MenuItem>
+                            <MenuItem
+                                value="manager"
+                                disabled={users.some(
+                                    (u) => u.role === "manager" && u.id !== editingUser?.id
+                                )}
+                            >
+                                Manager
+                            </MenuItem>
                             <MenuItem value="employee">Employee</MenuItem>
                         </TextField>
+
 
                         <Box sx={{ display: "flex", gap: 2, justifyContent: "flex-end" }}>
                             <Button
