@@ -50,7 +50,7 @@ const Categories = () => {
                     />
                 ) : (
                     user?.role === "admin" ? (<>
-                        <Box sx={{ display: "flex", justifyContent: "center"}}>
+                        <Box sx={{ display: "flex", justifyContent: "center", mt:-5}}>
                             <Button
                                 variant="contained"
                                 sx={{ width: "150px", fontWeight:"bold"}}
