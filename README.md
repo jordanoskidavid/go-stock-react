@@ -24,11 +24,11 @@ A full-stack **inventory and order management system** built with:
 
 ### Setup
 1# 1. Clone the repository
-git clone https://github.com/yourusername/gostock.git
+git clone https://github.com/jordanoskidavid/go-stock-react.git
 cd gostock
 
 # 2. Start the backend with Docker
-docker-compose up --build
+docker compose up --build
 
 # 3. Open a new terminal, go to the frontend folder
 cd frontend
