@@ -6,9 +6,11 @@ import (
 	"net/http"
 	"strconv"
 	"strings"
+	"time"
 
 	"github.com/jordanoskidavid/go-stock-react/database"
 	"github.com/jordanoskidavid/go-stock-react/models"
+	"github.com/xuri/excelize/v2"
 )
 
 func CreateOrder(w http.ResponseWriter, r *http.Request) {
@@ -73,7 +75,10 @@ func CreateOrder(w http.ResponseWriter, r *http.Request) {
 	}
 
 	w.Header().Set("Content-Type", "application/json")
-	json.NewEncoder(w).Encode(order)
+	err := json.NewEncoder(w).Encode(order)
+	if err != nil {
+		return
+	}
 }
 
 func GetAllOrders(w http.ResponseWriter, r *http.Request) {
@@ -166,5 +171,66 @@ func DeleteOrder(w http.ResponseWriter, r *http.Request) {
 	}
 
 	w.Header().Set("Content-Type", "application/json")
-	json.NewEncoder(w).Encode(map[string]string{"message": "Order deleted successfully"})
+	err := json.NewEncoder(w).Encode(map[string]string{"message": "Order deleted successfully"})
+	if err != nil {
+		return
+	}
+}
+
+func OrdersReportExcel(w http.ResponseWriter, r *http.Request) {
+	// Create new Excel file
+	f := excelize.NewFile()
+	sheet := "OrdersReport"
+	f.NewSheet(sheet)
+
+	headers := []string{"Order ID", "User ID", "Products", "Status", "Total", "Created At"}
+	for i, h := range headers {
+		cell, _ := excelize.CoordinatesToCellName(i+1, 1)
+		f.SetCellValue(sheet, cell, h)
+	}
+	f.SetColWidth(sheet, "C", "C", 50)
+	f.SetColWidth(sheet, "D", "D", 30)
+
+	var orders []models.Order
+	if err := database.DB.Preload("Products.Product").Find(&orders).Error; err != nil {
+		http.Error(w, "Failed to get orders", http.StatusInternalServerError)
+		return
+	}
+
+	for i, order := range orders {
+		row := i + 2
+
+		var productList []string
+		for _, op := range order.Products {
+			productList = append(productList, fmt.Sprintf("%s (x%d)", op.Product.Name, op.Quantity))
+		}
+		productsStr := strings.Join(productList, ", ")
+
+		f.SetCellValue(sheet, fmt.Sprintf("A%d", row), order.ID)
+		f.SetCellValue(sheet, fmt.Sprintf("B%d", row), order.UserID)
+		f.SetCellValue(sheet, fmt.Sprintf("C%d", row), productsStr)
+		f.SetCellValue(sheet, fmt.Sprintf("D%d", row), order.Status)
+		f.SetCellValue(sheet, fmt.Sprintf("E%d", row), order.Total)
+		f.SetCellValue(sheet, fmt.Sprintf("F%d", row), order.CreatedAt.Format("2006-01-02 15:04:05"))
+	}
+
+	// Add total revenue at the bottom
+	totalRow := len(orders) + 3
+	f.SetCellValue(sheet, fmt.Sprintf("D%d", totalRow), "Total Revenue")
+
+	var totalRevenue float64
+	for _, o := range orders {
+		totalRevenue += o.Total
+	}
+	f.SetCellValue(sheet, fmt.Sprintf("E%d", totalRow), totalRevenue)
+
+	// Stream file as download
+	filename := "orders_report_" + time.Now().Format("20060102_150405") + ".xlsx"
+	w.Header().Set("Content-Type", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
+	w.Header().Set("Content-Disposition", "attachment;filename="+filename)
+
+	if err := f.Write(w); err != nil {
+		http.Error(w, "Failed to write excel file", http.StatusInternalServerError)
+		return
+	}
 }
