@@ -6,6 +6,8 @@ import OrderProducts from "../components/pages/orders/OrdersHeader.tsx";
 import { useOrders } from "../hooks/useOrders";
 import CreateOrderDialog from "../components/pages/orders/CreateOrderDialog";
 import UpdateStatusDialog from "../components/pages/orders/UpdateStatusDialog.tsx";
+import {getOrdersReport} from "../services/orders.ts"
+import {useUserProfile} from "../hooks/useUserProfile.ts";
 
 const Orders = () => {
     const {
@@ -19,6 +21,8 @@ const Orders = () => {
         handleStatusUpdate,
         handleDelete,
     } = useOrders();
+    const { user } = useUserProfile();
+
 
     const [openCreate, setOpenCreate] = useState(false);
     const [openStatus, setOpenStatus] = useState(false);
@@ -35,7 +39,7 @@ const Orders = () => {
                     Orders
                 </Typography>
 
-                <Box sx={{ display: "flex", justifyContent: "center", mt:-5 }}>
+                <Box sx={{ display: "flex", justifyContent: "center", mt: -5, gap: 2 }}>
                     <Button
                         variant="contained"
                         sx={{ width: "150px", fontWeight: "bold" }}
@@ -43,6 +47,17 @@ const Orders = () => {
                     >
                         Add Order
                     </Button>
+
+                    {/* Show Get Report only for admin or manager */}
+                    {(user?.role === "admin" || user?.role === "manager") && (
+                        <Button
+                            variant="contained"
+                            sx={{ width: "150px", fontWeight: "bold" }}
+                            onClick={getOrdersReport}
+                        >
+                            Get Report
+                        </Button>
+                    )}
                 </Box>
 
                 <OrdersList
@@ -55,14 +70,12 @@ const Orders = () => {
                 />
             </Box>
 
-            {/* Create Order Modal */}
             <CreateOrderDialog
                 open={openCreate}
                 onClose={() => setOpenCreate(false)}
                 onCreate={handleCreate}
             />
 
-            {/* Update Status Modal */}
             {selectedOrderId && (
                 <UpdateStatusDialog
                     open={openStatus}

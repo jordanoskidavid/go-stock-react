@@ -225,9 +225,14 @@ func OrdersReportExcel(w http.ResponseWriter, r *http.Request) {
 	f.SetCellValue(sheet, fmt.Sprintf("E%d", totalRow), totalRevenue)
 
 	// Stream file as download
-	filename := "orders_report_" + time.Now().Format("20060102_150405") + ".xlsx"
+	filename := fmt.Sprintf("orders_report_%s.xlsx", time.Now().Format("20060102_150405"))
 	w.Header().Set("Content-Type", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
-	w.Header().Set("Content-Disposition", "attachment;filename="+filename)
+
+	// ✅ Put filename in quotes to prevent browser renaming
+	w.Header().Set("Content-Disposition", fmt.Sprintf(`attachment; filename="%s"`, filename))
+
+	// Optional: expose headers for frontend access
+	w.Header().Set("Access-Control-Expose-Headers", "Content-Disposition")
 
 	if err := f.Write(w); err != nil {
 		http.Error(w, "Failed to write excel file", http.StatusInternalServerError)

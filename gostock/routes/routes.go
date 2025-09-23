@@ -107,9 +107,8 @@ func SetupRoutes() {
 	http.HandleFunc("/api/delete-user-by-id/", middleware.AuthMiddleware(
 		middleware.RoleMiddleware(handlers.DeleteUserByID, "admin"),
 	))
-	//http.HandleFunc("/api/orders/excel", middleware.AuthMiddleware(
-	//	middleware.RoleMiddleware(handlers.OrdersReportExcel, "admin", "manager", "employee"),
-	//))
-	http.HandleFunc("/api/orders/excel", handlers.OrdersReportExcel)
-
+	//orders excel report
+	http.HandleFunc("/api/orders/excel", middleware.AuthMiddleware(
+		middleware.RoleMiddleware(handlers.OrdersReportExcel, "admin", "manager"),
+	))
 }
