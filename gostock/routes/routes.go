@@ -111,4 +111,5 @@ func SetupRoutes() {
 	http.HandleFunc("/api/orders/excel", middleware.AuthMiddleware(
 		middleware.RoleMiddleware(handlers.OrdersReportExcel, "admin", "manager"),
 	))
+	http.HandleFunc("/api/products/low-stock-notify", handlers.LowStockNotificationRoute)
 }
