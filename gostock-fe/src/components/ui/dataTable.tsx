@@ -45,7 +45,10 @@ function DataTable<T extends { id: number }>({
                 mx: "auto",
             }}
         >
-            <TableContainer>
+            <TableContainer  sx={{
+                maxHeight: 430, // fixed height for scrolling
+                overflowY: "auto",
+            }}>
                 <Table>
                     <TableHead>
                         <TableRow>

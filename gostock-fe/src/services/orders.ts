@@ -20,19 +20,7 @@ export const updateOrder = async (id: number, payload: UpdateOrderStatusPayload)
 export const deleteOrder = async (id: number): Promise<void> => {
     await api.delete(`/orders/delete/${id}`);
 };
-// export const getOrdersReport = async (): Promise<void> => {
-//     const response = await api.get("/orders/excel", {
-//         responseType: "blob", // makes sure the file is downloaded correctly
-//     });
-//
-//     const url = window.URL.createObjectURL(new Blob([response.data]));
-//     const link = document.createElement("a");
-//     link.href = url;
-//     link.setAttribute("download", "orders_report.xlsx"); // adjust extension if needed
-//     document.body.appendChild(link);
-//     link.click();
-//     link.remove();
-// };
+
 export const getOrdersReport = async (): Promise<void> => {
     const response = await api.get("/orders/excel", {
         responseType: "blob",
@@ -57,6 +45,23 @@ export const getOrdersReport = async (): Promise<void> => {
     link.remove();
 
     // Release memory
+    window.URL.revokeObjectURL(url);
+};
+export const getOrdersReportByDate = async (from: string | Date, to: string | Date) => {
+    const fromParam = from instanceof Date ? from.toISOString().split("T")[0] : from;
+    const toParam = to instanceof Date ? to.toISOString().split("T")[0] : to;
+
+    const response = await api.get(`/reports/stock/by-date-pdf?from=${fromParam}&to=${toParam}`, {
+        responseType: "blob",
+    });
+
+    const url = window.URL.createObjectURL(response.data);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = ""; // backend controls filename
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
     window.URL.revokeObjectURL(url);
 };
 

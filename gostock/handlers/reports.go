@@ -37,10 +37,9 @@ func StockReportPDF(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// Fetch orders WITH products and product details
 	var orders []models.Order
 	if err := database.DB.
-		Preload("Products.Product"). // Preload the Product inside OrderProduct
+		Preload("Products.Product").                                            // Preload the Product inside OrderProduct
 		Where("created_at BETWEEN ? AND ?", fromTime, toTime.AddDate(0, 0, 1)). // Include the whole "to" day
 		Find(&orders).Error; err != nil {
 		http.Error(w, "Failed to fetch orders", http.StatusInternalServerError)
