@@ -4,6 +4,9 @@ go 1.24.4
 
 require (
 	github.com/golang-jwt/jwt/v5 v5.2.3
+	github.com/jung-kurt/gofpdf v1.16.2
+	github.com/robfig/cron/v3 v3.0.1
+	github.com/xuri/excelize/v2 v2.9.1
 	golang.org/x/crypto v0.40.0
 	gorm.io/driver/mysql v1.6.0
 	gorm.io/gorm v1.30.0
@@ -16,10 +19,8 @@ require (
 	github.com/jinzhu/now v1.1.5 // indirect
 	github.com/richardlehane/mscfb v1.0.4 // indirect
 	github.com/richardlehane/msoleps v1.0.4 // indirect
-	github.com/robfig/cron/v3 v3.0.1 // indirect
 	github.com/tiendc/go-deepcopy v1.6.0 // indirect
 	github.com/xuri/efp v0.0.1 // indirect
-	github.com/xuri/excelize/v2 v2.9.1 // indirect
 	github.com/xuri/nfp v0.0.1 // indirect
 	golang.org/x/net v0.41.0 // indirect
 	golang.org/x/text v0.27.0 // indirect
