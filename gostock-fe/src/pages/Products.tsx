@@ -4,6 +4,7 @@ import ProductsList from "../components/pages/products/ProductsList";
 import FooterHome from "../components/pages/home/FooterHome";
 import ProductsHeader from "../components/pages/products/ProductsHeader";
 import { useProducts } from "../hooks/useProducts";
+import {getRemainingStockReport} from "../services/products.ts";
 
 const Products = () => {
     const {
@@ -35,26 +36,43 @@ const Products = () => {
                     />
                 ) : (
                     <>
-                    <Box sx={{ display: "flex", justifyContent: "center", mt:-5 }}>
-                        <Button
-                            variant="contained"
-                            sx={{ width: "150px", fontWeight: "bold" }}
-                            onClick={() =>
-                                setEditingProduct({
-                                    id: 0,
-                                    name: "",
-                                    description: "",
-                                    price: 0,
-                                    location: "",
-                                    stock: 0,
-                                    category_id: 0,
-                                    category: "",
-                                })
-                            }
+                        <Box
+                            sx={{
+                                display: "flex",
+                                justifyContent: "center",
+                                mt: -5,
+                                gap: 2,          // space between buttons
+                                flexWrap: "wrap", // allow wrapping if container is small
+                            }}
                         >
-                            Add Product
-                        </Button>
-                    </Box>
+                            <Button
+                                variant="contained"
+                                sx={{ minWidth: 150, fontWeight: "bold" }}
+                                onClick={() =>
+                                    setEditingProduct({
+                                        id: 0,
+                                        name: "",
+                                        description: "",
+                                        price: 0,
+                                        location: "",
+                                        stock: 0,
+                                        category_id: 0,
+                                        category: "",
+                                    })
+                                }
+                            >
+                                Add Product
+                            </Button>
+
+                            <Button
+                                variant="contained"
+                                sx={{ minWidth: 150, fontWeight: "bold" }}
+                                onClick={() => getRemainingStockReport()}
+                            >
+                                Remaining Stock Report
+                            </Button>
+                        </Box>
+
 
                         <ProductsList
                             products={products}

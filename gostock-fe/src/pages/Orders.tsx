@@ -1,13 +1,13 @@
 import { useState } from "react";
-import { Box, Button, Typography, Snackbar, Alert } from "@mui/material";
+import { Box, Button, Typography, Snackbar, Alert, TextField } from "@mui/material";
 import OrdersList from "../components/pages/orders/OrdersList";
 import FooterHome from "../components/pages/home/FooterHome";
 import OrderProducts from "../components/pages/orders/OrdersHeader.tsx";
 import { useOrders } from "../hooks/useOrders";
 import CreateOrderDialog from "../components/pages/orders/CreateOrderDialog";
 import UpdateStatusDialog from "../components/pages/orders/UpdateStatusDialog.tsx";
-import {getOrdersReport} from "../services/orders.ts"
-import {useUserProfile} from "../hooks/useUserProfile.ts";
+import { getOrdersReport, getOrdersReportByDate } from "../services/orders.ts";
+import { useUserProfile } from "../hooks/useUserProfile.ts";
 
 const Orders = () => {
     const {
@@ -21,12 +21,21 @@ const Orders = () => {
         handleStatusUpdate,
         handleDelete,
     } = useOrders();
-    const { user } = useUserProfile();
 
+    const { user } = useUserProfile();
 
     const [openCreate, setOpenCreate] = useState(false);
     const [openStatus, setOpenStatus] = useState(false);
     const [selectedOrderId, setSelectedOrderId] = useState<number | null>(null);
+
+    // Date state
+    const [fromDate, setFromDate] = useState<string>("");
+    const [toDate, setToDate] = useState<string>("");
+
+    const handleDownloadByDate = () => {
+        if (!fromDate || !toDate) return;
+        getOrdersReportByDate(fromDate, toDate);
+    };
 
     if (loading) return <Typography>Loading...</Typography>;
 
@@ -39,26 +48,63 @@ const Orders = () => {
                     Orders
                 </Typography>
 
-                <Box sx={{ display: "flex", justifyContent: "center", mt: -5, gap: 2 }}>
+                {/* Action Buttons */}
+                <Box
+                    sx={{
+                        display: "flex",
+                        justifyContent: "center",
+                        flexWrap: "wrap",
+                        gap: 2,
+                        mt: -5,
+                        alignItems: "center", // center vertically
+                    }}
+                >
                     <Button
                         variant="contained"
-                        sx={{ width: "150px", fontWeight: "bold" }}
+                        sx={{ width: 150, fontWeight: "bold", height: 40 }}
                         onClick={() => setOpenCreate(true)}
                     >
                         Add Order
                     </Button>
 
-                    {/* Show Get Report only for admin or manager */}
                     {(user?.role === "admin" || user?.role === "manager") && (
-                        <Button
-                            variant="contained"
-                            sx={{ width: "150px", fontWeight: "bold" }}
-                            onClick={getOrdersReport}
-                        >
-                            Get Report
-                        </Button>
+                        <>
+                            <Button
+                                variant="contained"
+                                sx={{ width: 150, fontWeight: "bold", height: 40 }}
+                                onClick={getOrdersReport}
+                            >
+                                Get Report
+                            </Button>
+
+                            {/* Date pickers */}
+                            <TextField
+                                type="date"
+                                value={fromDate}
+                                onChange={(e) => setFromDate(e.target.value)}
+                                size="small"
+                                sx={{ height: 40 }} // match button height
+                            />
+
+                            <TextField
+                                type="date"
+                                value={toDate}
+                                onChange={(e) => setToDate(e.target.value)}
+                                size="small"
+                                sx={{ height: 40 }}
+                            />
+
+                            <Button
+                                variant="contained"
+                                sx={{ width: 150, fontWeight: "bold", height: 40, padding: 2 }}
+                                onClick={handleDownloadByDate}
+                            >
+                                Stock by date
+                            </Button>
+                        </>
                     )}
                 </Box>
+
 
                 <OrdersList
                     orders={orders}
