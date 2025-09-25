@@ -102,3 +102,54 @@ func StockReportPDF(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 }
+
+func RemainingStockReportPDF(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodGet {
+		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
+		return
+	}
+
+	// Fetch products
+	var products []models.Product
+	if err := database.DB.Find(&products).Error; err != nil {
+		http.Error(w, "Failed to retrieve products", http.StatusInternalServerError)
+		return
+	}
+
+	if len(products) == 0 {
+		http.Error(w, "No products available", http.StatusNotFound)
+		return
+	}
+
+	pdf := gofpdf.New("P", "mm", "A4", "")
+	pdf.AddPage()
+	pdf.SetFont("Arial", "B", 16)
+	pdf.Cell(190, 10, "Stock Report")
+	pdf.Ln(12)
+	pdf.SetFont("Arial", "B", 12)
+
+	// Table headers
+	headers := []string{"Product ID", "Product Name", "Remaining Stock"}
+	for _, h := range headers {
+		pdf.CellFormat(60, 10, h, "1", 0, "C", false, 0, "")
+	}
+	pdf.Ln(-1)
+
+	// Table content
+	pdf.SetFont("Arial", "", 12)
+	for _, p := range products {
+		pdf.CellFormat(60, 10, strconv.Itoa(int(p.ID)), "1", 0, "C", false, 0, "")
+		pdf.CellFormat(60, 10, p.Name, "1", 0, "C", false, 0, "")
+		pdf.CellFormat(60, 10, strconv.Itoa(p.Stock), "1", 0, "C", false, 0, "")
+		pdf.Ln(-1)
+	}
+
+	// Stream PDF
+	filename := "stock_report_" + time.Now().Format("20060102_150405") + ".pdf"
+	w.Header().Set("Content-Type", "application/pdf")
+	w.Header().Set("Content-Disposition", "attachment; filename="+filename)
+	if err := pdf.Output(w); err != nil {
+		http.Error(w, "Failed to generate PDF", http.StatusInternalServerError)
+		return
+	}
+}
