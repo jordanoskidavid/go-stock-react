@@ -118,6 +118,6 @@ func SetupRoutes() {
 		middleware.RoleMiddleware(handlers.StockReportPDF, "admin", "manager"),
 	))
 	http.HandleFunc("/api/reports/remaining-stock", middleware.AuthMiddleware(
-		middleware.RoleMiddleware(handlers.RemainingStockReportPDF, "admin", "manager"),
+		middleware.RoleMiddleware(handlers.RemainingStockReportPDF, "admin", "manager", "employee"),
 	))
 }
