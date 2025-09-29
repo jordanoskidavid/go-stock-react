@@ -4,6 +4,7 @@ import { clearToken, getToken } from "../utils/storage.ts";
 import type { User } from "../types/user.ts";
 import { getUserFromToken, type JwtPayload } from "../utils/jwt.ts";
 import { getUserById, updateUser } from "../services/user.ts";
+import {triggerStockWarning} from "../services/password.ts";
 
 export const useUserProfile = () => {
     const [user, setUser] = useState<User | null>(null);
@@ -60,6 +61,17 @@ export const useUserProfile = () => {
             setEditMode(false);
         }
     };
+    const handleStockWarning = async () => {
+        try {
+            await triggerStockWarning();
+            showToast("Stock warning triggered! Email sent if any stock < 10", "success");
+        } catch (error) {
+            console.error("Error triggering stock warning:", error);
+            showToast("Failed to trigger stock warning", "error");
+
+        }
+    };
+
 
     const handleLogout = () => {
         clearToken();
@@ -78,5 +90,6 @@ export const useUserProfile = () => {
         setSnackbarOpen,
         snackbarMessage,
         snackbarSeverity,
+        handleStockWarning
     };
 };
