@@ -49,6 +49,7 @@ const HeaderProfile = () => {
                         >
                             Stock warning
                         </Button>
+
                 <Link to="/register">
                     <Button
                         variant="contained"
@@ -57,6 +58,7 @@ const HeaderProfile = () => {
                             "&:hover": { backgroundColor: "#00AEEF" },
                             borderRadius: 2,
                             px: 3,
+                            ml:1
                         }}
                     >
                         Add a User
