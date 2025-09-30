@@ -7,3 +7,7 @@ export const ResetLink = (forgotPassword: ForgotPassword) => {
 export const ResetPassword = (payload: ResetPasswordPayload) => {
     return api.post("/reset-password", payload);
 };
+
+export const triggerStockWarning = () => {
+    return api.post("/products/low-stock-notify"); // adjust path if your backend uses another one
+};

@@ -1,9 +1,13 @@
 import { Link } from "react-router-dom";
-import {Typography, Box, Button} from "@mui/material";
+import {Typography, Box, Button, Snackbar, Alert} from "@mui/material";
 import {useUserProfile} from "../../../hooks/useUserProfile.ts";
 
 const HeaderProfile = () => {
-    const {user} = useUserProfile();
+    const {user,handleStockWarning,
+        snackbarOpen,
+        setSnackbarOpen,
+        snackbarMessage,
+        snackbarSeverity} = useUserProfile();
     return (
         <Box
             sx={{
@@ -32,6 +36,20 @@ const HeaderProfile = () => {
 
             <Box sx={{ flexShrink: 0 }}>
                 {user?.role === 'admin' ? (
+                    <>
+                        <Button
+                            variant="contained"
+                            onClick={handleStockWarning}
+                            sx={{
+                                backgroundColor: "#008DDA",
+                                "&:hover": { backgroundColor: "#00AEEF" },
+                                borderRadius: 2,
+                                px: 1,
+                            }}
+                        >
+                            Stock warning
+                        </Button>
+
                 <Link to="/register">
                     <Button
                         variant="contained"
@@ -40,11 +58,14 @@ const HeaderProfile = () => {
                             "&:hover": { backgroundColor: "#00AEEF" },
                             borderRadius: 2,
                             px: 3,
+                            ml:1
                         }}
                     >
                         Add a User
                     </Button>                </Link>
-                ):(
+
+                    </>
+                    ):(
                     <Link to="/">
                         <img
                             src="/logo.png"
@@ -54,6 +75,20 @@ const HeaderProfile = () => {
                     </Link>
                 )}
             </Box>
+            <Snackbar
+                open={snackbarOpen}
+                autoHideDuration={3000}
+                onClose={() => setSnackbarOpen(false)}
+                anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+            >
+                <Alert
+                    onClose={() => setSnackbarOpen(false)}
+                    severity={snackbarSeverity}
+                    sx={{ width: "100%", fontWeight: "bold", boxShadow: "0px 3px 10px rgba(0,0,0,0.3)",
+                    }}                >
+                    {snackbarMessage}
+                </Alert>
+            </Snackbar>
         </Box>
     );
 };
